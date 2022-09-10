@@ -32,6 +32,6 @@ const reportSchema = new Schema(
   }
 );
 
-const Report = model("Report", userSchema);
+const Report = model("Report", reportSchema);
 
 module.exports = Report;

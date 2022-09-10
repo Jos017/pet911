@@ -10,8 +10,8 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const PetDescription = require("../models/petDescription.model");
 const Admin = require("../models/Admin.model");
+const Report =require("../models/report.model")
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
