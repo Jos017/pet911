@@ -28,7 +28,14 @@ const userSchema = new Schema(
     },
     phoneNomber: String,
     address: String,
-    // petName: {{}}   
+    pets: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Pet'
+    }],
+    reports: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Report'
+    }]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

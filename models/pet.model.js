@@ -19,8 +19,12 @@ const petSchema = new Schema(
         type:String,
         required: true,
     },
+    description: {
+        type: [String],
+    },
     owner:{
-        // owner{{id}}   // Pendiente 
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
     },
     {
