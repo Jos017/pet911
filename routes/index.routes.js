@@ -5,4 +5,9 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
+router.get("/recommendations", (req, res, next) => {
+  res.render("recommendations");
+});
+
+
 module.exports = router;
