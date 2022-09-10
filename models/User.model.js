@@ -28,7 +28,7 @@ const userSchema = new Schema(
     },
     phoneNomber: String,
     address: String,
-    // petNomber: {{}}   
+    // petName: {{}}   
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

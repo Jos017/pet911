@@ -19,13 +19,7 @@ const PetDescriptionModel = new Schema(
             required: true,
             enum:["Female","Male"],    
         },
-        Situation:{
-            type:String,
-            trim: true,
-            required: [true,'Give details about the situation'],
-            minlength:1,
-            maxlength:100
-        },
+        
     },
     {
         timestamps: true,
