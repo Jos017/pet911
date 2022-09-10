@@ -20,7 +20,7 @@ const petSchema = new Schema(
         required: true,
     },
     owner:{
-        // owner{{id}}
+        // owner{{id}}   // Pendiente 
     }
     },
     {
