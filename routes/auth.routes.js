@@ -21,11 +21,11 @@ router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
 
+// User
 router.post("/signup", isLoggedOut, (req, res) => {
   const { username, firstName, lastName, email, password, phone, address, check } = req.body;
-
-  console.log(req.body);
-
+  
+  
   if (!username) {
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide your username.",
@@ -66,14 +66,20 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .then((hashedPassword) => {
         // Create a user and save it in the database
         return User.create({
-          username,
+          username, 
+          firstName,
+          lastName, 
+          email, 
+          phone, 
+          address,
+          check,
           password: hashedPassword,
         });
       })
       .then((user) => {
         // Bind the user to the session object
         req.session.user = user;
-        res.redirect("/");
+        res.redirect("/user/user-profile");
       })
       .catch((error) => {
         if (error instanceof mongoose.Error.ValidationError) {
@@ -91,6 +97,14 @@ router.post("/signup", isLoggedOut, (req, res) => {
           .render("auth/signup", { errorMessage: error.message });
       });
   });
+//   User.create(req.body)
+//   .then(newUser =>{
+//     res.redirect("/user/user-profile")
+//   })
+//   .catch(err => console.log (err)) 
+
+// console.log(req.body);
+
 });
 
 router.get("/login", isLoggedOut, (req, res) => {
@@ -134,7 +148,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect("/");
+        return res.redirect("/user/user-profile");
       });
     })
 
@@ -157,5 +171,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
   });
 });
+
+
 
 module.exports = router;
