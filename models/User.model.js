@@ -28,7 +28,8 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: [true, 'Password is required.'],
-      match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Please use a valid password']
+      
+      // match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!/%*?&])[A-Za-z\d@$/!%*?&]{8,}$/, 'Please use a valid password']
     },
     phone: String,
     address: String,

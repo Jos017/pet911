@@ -9,9 +9,9 @@ const saltRounds = 10;
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
-const Pet = require("../models/pet.model");
+const Pet = require("../models/Pet.model");
 const Admin = require("../models/Admin.model");
-const Report =require("../models/report.model")
+const Report =require("../models/Report.model")
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -22,17 +22,21 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 // User
-router.post("/signup", isLoggedOut, (req, res) => {
+router.post("/signup", (req, res) => {
   const { username, firstName, lastName, email, password, phone, address, check } = req.body;
   
+  console.log(req.body)
+  // return
   
   if (!username) {
+    console.log("1")
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide your username.",
     });
   }
 
   if (password.length < 8) {
+    console.log("2")
     return res.status(400).render("auth/signup", {
       errorMessage: "Your password needs to be at least 8 characters long.",
     });
@@ -60,10 +64,12 @@ router.post("/signup", isLoggedOut, (req, res) => {
     }
 
     // if user is not found, create a new user - start with hashing the password
+    console.log("Hola")
     return bcrypt
       .genSalt(saltRounds)
       .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
+        console.log(hashedPassword)
         // Create a user and save it in the database
         return User.create({
           username, 
@@ -82,6 +88,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         res.redirect("/user/user-profile");
       })
       .catch((error) => {
+        console.log(error)
         if (error instanceof mongoose.Error.ValidationError) {
           return res
             .status(400)
