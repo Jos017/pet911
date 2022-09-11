@@ -30,7 +30,7 @@ const userSchema = new Schema(
       required: [true, 'Password is required.'],
       match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Please use a valid password']
     },
-    phoneNomber: String,
+    phone: String,
     address: String,
     pets: [{
       type: Schema.Types.ObjectId,
