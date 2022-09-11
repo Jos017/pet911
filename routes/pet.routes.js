@@ -7,7 +7,7 @@ router.get("/pet-profile", (req, res, next) => {
 
 /* GET Pet Reports */
 router.get("/pet-reports", (req, res, next) => {
-  res.send("pet/pet-reports");
+  res.render("pet/pet-reports");
 });
 
 /* GET Pet Signup */
