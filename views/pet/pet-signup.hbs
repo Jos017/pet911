@@ -1,1 +1,47 @@
-<h1>Pet Signup</h1>
+<section class="vh-100" style="background-color: #F8D046;">
+  <h1>Register your Pet</h1>
+  <form class="m-5 d-flex flex-column align-items-center">
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pet name </label>
+      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="User name">
+    </div>
+    <div class="form-group">
+      <label for="">Specie</label>
+      <select class="form-select" aria-label="Default select example">
+        <option value="1">dog</option>
+        <option value="2">cat</option>
+        <option value="3">pig</option>
+        <option value="4">bird</option>
+        <option value="5">other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Pet Status</label>
+      <select class="form-select" aria-label="Default select example">
+        <option value="1">With his owner</option>
+        <option value="2">Finded but no with its owner</option>
+        <option value="3">Not Found yet</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pet photos</label>
+      <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Last Name">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Aditional Description</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Clothers">
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Gender">
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Color">
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Size">
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Special Signs">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</section>
+
+
+{{#if errorMessage}}
+{{errorMessage}}
+{{/if}}

@@ -10,6 +10,11 @@ const petSchema = new Schema(
         minlength:1,
         maxlength:30
     },
+    specie: {
+        type: String,
+        required: true,
+        enum: ['dog', 'cat', 'pig', 'bird', 'other']
+    },
     status: {
         type:String,
         required: true,
