@@ -21,7 +21,7 @@ const reportSchema = new Schema(
         trim: true,
         minlength: 1,
     },
-    user: { 
+    userId: { 
       type: Schema.Types.ObjectId,
       ref: 'User'
     }
