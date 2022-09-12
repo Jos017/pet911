@@ -10,4 +10,9 @@ router.get("/my-pets", (req, res, next) => {
   res.render("user/my-pets");
 });
 
+/* GET New Report */
+router.get("/new-report", (req, res, next) => {
+  res.render("user/new-report");
+})
+
 module.exports = router;
