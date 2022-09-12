@@ -21,6 +21,11 @@ const reportSchema = new Schema(
         trim: true,
         minlength: 1,
     },
+    foundStatus: {
+      type:String,
+      required: true,
+      enum:['1', '2', '3'],
+    },
     userId: { 
       type: Schema.Types.ObjectId,
       ref: 'User'
