@@ -24,12 +24,13 @@ router.get("/new-report", (req, res, next) => {
 
 /* POST New Report */
 router.post("/new-report", (req, res) => {
-  const {petName, situation, date} = req.body;
+  const {petName, situation, foundStatus, date} = req.body;
   const userId = req.session.user._id;
   Report.create({
     petName,
     situation,
     date,
+    foundStatus,
     userId: userId
   })
     .then(console.log('New Report added'))

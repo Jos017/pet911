@@ -13,12 +13,7 @@ const petSchema = new Schema(
     specie: {
         type: String,
         required: true,
-        enum: ['dog', 'cat', 'pig', 'bird', 'other']
-    },
-    status: {
-        type:String,
-        required: true,
-        enum:["With his owner","Lost","Finden but no with this owner"],
+        enum: ['1', '2', '3', '4', '5'],
     },
     picture:{
         type:String,
