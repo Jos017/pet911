@@ -1,0 +1,32 @@
+<section class="vh-100" style="background-color: #F8D046;">
+  <h1>Create new report</h1>
+  <form class="m-5 d-flex flex-column align-items-center" action="/user/new-report" method="post">
+
+    <div class="form-group">
+      <label for="petName">Pet name </label>
+      <input type="text" class="form-control" id="petName" name="petName" placeholder="Pet Name" />
+    </div>
+    <div class="form-group">
+      <label for="date">Date of Loss</label>
+      <input type="date" class="form-control" id="date" name="date"/>
+    </div>
+    <div class="form-group">
+      <label>Pet Status</label>
+      <select class="form-select" aria-label="Status form" name="petStatus">
+        <option value="1">With his owner</option>
+        <option value="2">Finded but no with its owner</option>
+        <option value="3">Not Found yet</option>
+      </select>
+    </div>
+    <div class="form-floating my-3">
+      <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
+      <label for="floatingTextArea">Describe your pet situation</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</section>
+
+
+{{#if errorMessage}}
+{{errorMessage}}
+{{/if}}
