@@ -42,7 +42,16 @@ router.get("/my-pets", (req, res, next) => {
 
 /* GET New Report */
 router.get("/new-report", (req, res, next) => {
-  res.render("user/new-report");
+  const userId = req.session.user._id;
+  User.findById(userId)
+    .then((userFound) => {
+      return userFound.populate('pets');
+    })
+    .then((userWithPets) => {
+      console.log(userWithPets);
+      res.render("user/new-report", userWithPets);
+    })
+    .catch((err) => console.log(err));
 })
 
 /* POST New Report */
@@ -67,6 +76,19 @@ router.post("/new-report", (req, res) => {
       errorMessage: 'We need some information about your report, please provide some details'
     });
   }
+
+  // User.findById(userId)
+  //   .then((userFound) => {
+  //     const { pets } = userFound;
+  //     if(pets.length < 1) {
+  //       return res.status(400).render("user/new-report", {
+  //         errorMessage: "No pet registered, register your pet"
+  //       });
+  //     }
+  //     pets.forEach( pet => {
+  //       if ()
+  //     });
+  //   });
   
   Report.create({
     petName,
