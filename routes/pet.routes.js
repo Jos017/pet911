@@ -5,9 +5,9 @@ const Report = require('../models/Report.model');
 const mongoose = require("mongoose")
 
 /* GET Pet Profile */
-router.get("/pet-profile", (req, res, next) => {
-  res.render("pet/pet-profile");
-});
+// router.get("/pet-profile", (req, res, next) => {
+//   res.render("pet/pet-profile");
+// });
 
 /* GET Pet Reports */
 router.get("/pet-reports", (req, res, next) => {
@@ -50,5 +50,27 @@ if (!picture) {
     res.redirect("/pet/pet-profile")
   })
 })
+
+//Get pet Profile
+
+router.get("/pet-profile/:petId", (req, res, next) => {
+  
+  const {petId} =req.params
+
+    Pet.findById(petId)
+    .then((petInfo) => {
+      console.log(petInfo);
+      res.render("pet/pet-profile", petInfo);
+    })
+    .catch((err) => console.log(err));
+  });
+  
+  
+ 
+  
+
+
+
+
 
 module.exports = router;

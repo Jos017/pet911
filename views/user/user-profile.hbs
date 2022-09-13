@@ -90,7 +90,9 @@
                 <p class="mb-0">Pets Registered</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{pets}}</p>
+                {{#each pets}}
+                <p class="text-muted mb-0">{{petName}}</p>
+                {{/each}}
               </div>
             </div>
             <hr>
