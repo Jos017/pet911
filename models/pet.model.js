@@ -20,7 +20,7 @@ const petSchema = new Schema(
         required: true,
     },
     description: {
-        type: [String],
+        type: String,
     },
     owner:{
         type: Schema.Types.ObjectId,

@@ -9,7 +9,16 @@ const User = require("../models/User.model");
 
 /* GET User Profile */
 router.get("/user-profile", (req, res, next) => {
-  res.render("user/user-profile");
+  const userId = req.session.user._id
+
+  User.findById(userId)
+  .then(info =>{
+    console.log(info)
+    res.render("user/user-profile",info);
+  })
+  .catch(error=>{
+    console.log()
+  })
 });
 
 /* GET My pets */

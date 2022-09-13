@@ -21,6 +21,7 @@ router.get("/pet-signup", (req, res, next) => {
 router.post("/pet-signup", (req, res) => {
  const {petName, specie, picture, description} = req.body
  const userId = req.session.user._id
+ 
   Pet.create({
     petName,
     specie,
@@ -28,8 +29,10 @@ router.post("/pet-signup", (req, res) => {
     description,
     owner: userId
   })
-  .then((newPet) => {
-    console.log('newPetCreat')
+  .then((newPet)=>{
+    return User.findByIdAndUpdate(userId,{$push:{pets:newPet._id}},{new:true})
+    })
+  .then((newUser) => {
     res.redirect("/pet/pet-profile")
   })
 })
