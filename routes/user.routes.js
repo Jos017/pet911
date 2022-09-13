@@ -49,6 +49,25 @@ router.get("/new-report", (req, res, next) => {
 router.post("/new-report", (req, res) => {
   const {petName, situation, foundStatus, date} = req.body;
   const userId = req.session.user._id;
+  
+  if (!petName) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'Please provide a Pet name.'
+    });
+  }
+
+  if (!date) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'Give a valid date'
+    });
+  }
+
+  if (!situation) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'We need some information about your report, please provide some details'
+    });
+  }
+  
   Report.create({
     petName,
     situation,
