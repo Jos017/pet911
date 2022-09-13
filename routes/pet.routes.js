@@ -4,9 +4,9 @@ const User = require("../models/User.model");
 const mongoose = require("mongoose")
 
 /* GET Pet Profile */
-router.get("/pet-profile", (req, res, next) => {
-  res.render("pet/pet-profile");
-});
+// router.get("/pet-profile", (req, res, next) => {
+//   res.render("pet/pet-profile");
+// });
 
 /* GET Pet Reports */
 router.get("/pet-reports", (req, res, next) => {
@@ -36,5 +36,26 @@ router.post("/pet-signup", (req, res) => {
     res.redirect("/pet/pet-profile")
   })
 })
+
+//Get pet Profile
+
+router.get("/pet-profile", (req, res, next) => {
+  const userId = req.session.user._id
+  User.findById(userId)
+  .then((userFound) => {
+    return userFound.populate('pets');
+  })
+  .then((userWithPets) => {
+    console.log(userWithPets);
+    res.render("pet/pet-profile", userWithPets);
+  })
+  .catch((err) => console.log(err));
+});
+
+  
+
+
+
+
 
 module.exports = router;

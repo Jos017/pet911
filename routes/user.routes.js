@@ -26,7 +26,7 @@ router.get("/user-profile", (req, res, next) => {
   if (userPrivileges === 'user') {
     User.findById(userId)
     .then(info =>{
-      console.log("Informacion de usuario", info)
+      // console.log("Informacion de usuario", info)
       res.render("user/user-profile",info);
     })
     .catch(error=>{
