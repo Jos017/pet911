@@ -6,7 +6,8 @@ const { populate } = require("../models/Report.model");
 // Models Required
 const Report = require("../models/Report.model");
 const User = require("../models/User.model");
-const Admin = require("../models/Admin.model")
+const Admin = require("../models/Admin.model");
+const Pet = require("../models/Pet.model");
 
 /* GET User Profile */
 router.get("/user-profile", (req, res, next) => {
@@ -26,11 +27,13 @@ router.get("/user-profile", (req, res, next) => {
   if (userPrivileges === 'user') {
     User.findById(userId)
     .then(info =>{
-      // console.log("Informacion de usuario", info)
-      res.render("user/user-profile",info);
+    return info.populate("pets")
+  })
+    .then((infoPopulate) =>{
+      res.render("user/user-profile",infoPopulate)
     })
     .catch(error=>{
-      console.log()
+      console.log(error)
     })
   }
 });

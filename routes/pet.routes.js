@@ -49,19 +49,20 @@ if (!picture) {
 
 //Get pet Profile
 
-router.get("/pet-profile", (req, res, next) => {
-  const userId = req.session.user._id
-  User.findById(userId)
-  .then((userFound) => {
-    return userFound.populate('pets');
-  })
-  .then((userWithPets) => {
-    console.log(userWithPets);
-    res.render("pet/pet-profile", userWithPets);
-  })
-  .catch((err) => console.log(err));
-});
+router.get("/pet-profile/:petId", (req, res, next) => {
+  
+  const {petId} =req.params
 
+    Pet.findById(petId)
+    .then((petInfo) => {
+      console.log(petInfo);
+      res.render("pet/pet-profile", petInfo);
+    })
+    .catch((err) => console.log(err));
+  });
+  
+  
+ 
   
 
 
