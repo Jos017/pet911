@@ -6,7 +6,7 @@
    <div class="form-group">
       <label for="exampleInputPassword1">User name </label>
       <input type="text" class="form-control" id="exampleInputPassword1" placeholder="User name" name="username" value="Jose">
-   </div>
+      </div>
    <div class="form-group">
       <label for="exampleInputPassword1">First Name</label>
       <input type="text" class="form-control" id="exampleInputPassword1" placeholder="First Name" name="firstName" value="Jose">
@@ -23,7 +23,7 @@
    <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" value="asdfQWER1234!">
-   </div>
+     </div>
    <div class="form-group">
       <label for="exampleInputPassword1">Phone number</label>
       <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone number" name="phone" value="jose">
@@ -37,10 +37,10 @@
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
    </div>
    <button type="submit" class="btn btn-primary">Submit</button>
+   {{#if errorMessage}}
+      <p>{{errorMessage}}</p> 
+   {{/if}}
 </form>
 </section>
 
 
-{{#if errorMessage}}
-{{errorMessage}}
-{{/if}}

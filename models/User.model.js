@@ -31,8 +31,15 @@ const userSchema = new Schema(
       
       // match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!/%*?&])[A-Za-z\d@$/!%*?&]{8,}$/, 'Please use a valid password']
     },
-    phone: String,
-    address: String,
+    phone:{
+      type: String,
+      required: [true, 'phone missing']
+    },
+
+    address:{
+      type: String,
+      required: [true, 'address missing']
+    },
     userPrivileges: {
       type: String,
       required: [true, 'Define user privileges is required'],

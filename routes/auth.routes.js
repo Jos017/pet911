@@ -18,11 +18,11 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 // Admin Sign up
-router.get("/admin-signup", (req, res) => {
+router.get("/admin-signup",isLoggedOut,(req, res) => {
   res.render("auth/admin-signup")
 })
 
-router.post("/admin-signup", (req, res) => {
+router.post("/admin-signup",isLoggedOut,(req, res) => {
   const { username, password } = req.body;
   
   if (!username) {
@@ -100,28 +100,38 @@ router.post("/signup", (req, res) => {
   if (!username) {
     console.log("1")
     return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide your username.",
+      errorMessage: "Please provide a username.",
     });
-  }
+  } 
 
-  if (password.length < 8) {
-    console.log("2")
+  if(!email){
+    console.log("3")
     return res.status(400).render("auth/signup", {
-      errorMessage: "Your password needs to be at least 8 characters long.",
+      errorMessage: "Please provide a email.",
     });
-  }
+  } 
 
-  //   ! This use case is using a regular expression to control for special characters and min length
-  /*
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
   if (!regex.test(password)) {
-    return res.status(400).render("signup", {
+    return res.status(400).render("auth/signup", {
       errorMessage:
         "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
   }
-  */
+
+  if(!phone){
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide a phone number."
+    });
+  }
+
+  if(!address){
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide an address."
+    });
+  }
+  
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -131,7 +141,13 @@ router.post("/signup", (req, res) => {
         .status(400)
         .render("auth/signup", { errorMessage: "Username already taken." });
     }
-
+    
+  User.findOne({email}).then((founded)=>{
+     if (founded) {
+      return res
+        .status(400)
+        .render("auth/signup", { errorMessage: "Email is already registered." });
+    }
     // if user is not found, create a new user - start with hashing the password
     console.log("Hola")
     return bcrypt
@@ -173,15 +189,8 @@ router.post("/signup", (req, res) => {
           .status(500)
           .render("auth/signup", { errorMessage: error.message });
       });
+    })    
   });
-//   User.create(req.body)
-//   .then(newUser =>{
-//     res.redirect("/user/user-profile")
-//   })
-//   .catch(err => console.log (err)) 
-
-// console.log(req.body);
-
 });
 
 router.get("/login", isLoggedOut, (req, res) => {
@@ -237,6 +246,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     });
 });
 
+//Destroy
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
