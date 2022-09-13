@@ -21,6 +21,16 @@ router.get("/pet-signup", (req, res, next) => {
 router.post("/pet-signup", (req, res) => {
  const {petName, specie, picture, description} = req.body
  const userId = req.session.user._id
+ if (!petName) {
+  return res
+    .status(400)
+    .render("pet/pet-signup", { errorMessage: "Please provide your pet name."});  
+}
+if (!picture) {
+  return res
+    .status(400)
+    .render("pet/pet-signup", { errorMessage: "Please provide a picture of your pet."});  
+}
  
   Pet.create({
     petName,
