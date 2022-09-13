@@ -11,19 +11,14 @@ const adminSchema = new Schema(
       minlength: 1,
       maxlength: 30
     },
-    email: {
-      type: String,
-      required: [true, 'Username is required'],
-      unique: true,
-      trim: true,
-      lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.']
-
-    },
     password: {
       type: String,
       required: true,
-      match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Please use a valid password']
+    },
+    userPrivileges: {
+      type: String,
+      required: [true, 'Define user privileges is required'],
+      enum: ['user', 'admin']
     }
   },
   {

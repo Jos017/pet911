@@ -6,19 +6,33 @@ const { populate } = require("../models/Report.model");
 // Models Required
 const Report = require("../models/Report.model");
 const User = require("../models/User.model");
+const Admin = require("../models/Admin.model")
 
 /* GET User Profile */
 router.get("/user-profile", (req, res, next) => {
   const userId = req.session.user._id
-
-  User.findById(userId)
-  .then(info =>{
-    console.log(info)
-    res.render("user/user-profile",info);
-  })
-  .catch(error=>{
-    console.log()
-  })
+  const userPrivileges = req.session.user.userPrivileges
+  if (userPrivileges === 'admin') {
+    console.log("User privileges", userPrivileges)
+    Admin.findById(userId)
+    .then(info =>{
+      console.log("Informacion de usuario", info)
+      res.render("user/user-profile",info);
+    })
+    .catch(error=>{
+      console.log()
+    })
+  }
+  if (userPrivileges === 'user') {
+    User.findById(userId)
+    .then(info =>{
+      console.log("Informacion de usuario", info)
+      res.render("user/user-profile",info);
+    })
+    .catch(error=>{
+      console.log()
+    })
+  }
 });
 
 /* GET My pets */

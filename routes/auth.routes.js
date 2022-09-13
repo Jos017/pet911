@@ -17,6 +17,75 @@ const Report =require("../models/Report.model")
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+// Admin Sign up
+router.get("/admin-signup", (req, res) => {
+  res.render("auth/admin-signup")
+})
+
+router.post("/admin-signup", (req, res) => {
+  const { username, password } = req.body;
+  
+  if (!username) {
+    console.log("1")
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide your username.",
+    });
+  }
+  console.log("ADMINADMINKEY", process.env.ADMIN_KEY)
+  if (password !== process.env.ADMIN_KEY) {
+    console.log("2")
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Your password does not match credentials",
+    });
+  }
+
+  Admin.findOne({ username }).then((found) => {
+    // If the user is found, send the message username is taken
+    if (found) {
+      return res
+        .status(400)
+        .render("auth/signup", { errorMessage: "Username already taken." });
+    }
+    console.log("EROROROROROROR",req.body)
+
+    // if user is not found, create a new user - start with hashing the password
+    return bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hashedPassword) => {
+        console.log(hashedPassword)
+        // Create a user and save it in the database
+        return Admin.create({
+          username, 
+          password: hashedPassword,
+          userPrivileges: 'admin'
+        });
+      })
+      .then((user) => {
+        // Bind the user to the session object
+        console.log("UserUser", user)
+        req.session.user = user;
+        res.redirect("/user/user-profile");
+      })
+      .catch((error) => {
+        console.log(error)
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res
+            .status(400)
+            .render("auth/signup", { errorMessage: error.message });
+        }
+        if (error.code === 11000) {
+          return res
+            .status(400)
+            .render("auth/signup", { errorMessage: "Username need to be unique. The username you chose is already in use." });
+        }
+        return res
+          .status(500)
+          .render("auth/signup", { errorMessage: error.message });
+      });
+  });
+})
+
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
@@ -80,6 +149,7 @@ router.post("/signup", (req, res) => {
           address,
           check,
           password: hashedPassword,
+          userPrivileges: 'user'
         });
       })
       .then((user) => {

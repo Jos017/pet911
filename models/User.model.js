@@ -33,6 +33,11 @@ const userSchema = new Schema(
     },
     phone: String,
     address: String,
+    userPrivileges: {
+      type: String,
+      required: [true, 'Define user privileges is required'],
+      enum: ['user', 'admin']
+    },
     pets: [{
       type: Schema.Types.ObjectId,
       ref: 'Pet'
