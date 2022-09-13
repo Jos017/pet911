@@ -37,8 +37,21 @@ router.get("/user-profile", (req, res, next) => {
 
 /* GET My pets */
 router.get("/my-pets", (req, res, next) => {
-  res.render("user/my-pets");
+  const userId = req.session.user._id;
+  User.findById(userId)
+    .then((userFound) => {
+      return userFound.populate('pets');
+    })
+    .then((userWithPets) => {
+      console.log(userWithPets);
+      res.render("user/my-pets", userWithPets);
+    })
+    .catch((err) => console.log(err));
+    
+  
 });
+
+
 
 /* GET New Report */
 router.get("/new-report", (req, res, next) => {
