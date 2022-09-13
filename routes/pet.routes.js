@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Pet = require("../models/Pet.model");
 const User = require("../models/User.model");
+const Report = require('../models/Report.model');
 const mongoose = require("mongoose")
 
 /* GET Pet Profile */
@@ -10,6 +11,9 @@ router.get("/pet-profile", (req, res, next) => {
 
 /* GET Pet Reports */
 router.get("/pet-reports", (req, res, next) => {
+  const { filter } = req.query;
+  // Report.find({})
+  // Filtrando los reportes
   res.render("pet/pet-reports");
 });
 
