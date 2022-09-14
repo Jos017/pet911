@@ -1,6 +1,7 @@
 
 <form action="/user/edit-userProfile" method="post">
 <section style="background-color: #eee;">
+  {{#with currentUser}}
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
@@ -29,6 +30,7 @@
                 <p class="mb-0">Username</p>
               </div>
               <div class="col-sm-9">
+                
                 <input type="text" value="{{username}}" name="username">
                 {{!-- <p class="text-muted mb-0">{{username}}</p> --}}
 
@@ -40,7 +42,8 @@
                 <p class="mb-0">First Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{firstName}}</p>
+                <input type="text" value="{{firstName}}" name="firstName">
+                {{!-- <p class="text-muted mb-0">{{firstName}}</p> --}}
               </div>
             </div>
             <hr>
@@ -49,7 +52,8 @@
                 <p class="mb-0">Last Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{lastName}}</p>
+                <input type="text" value="{{lastName}}" name="lastName">
+                {{!-- <p class="text-muted mb-0">{{lastName}}</p> --}}
               </div>
             </div>
             <hr>
@@ -58,7 +62,8 @@
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{email}}</p>
+                <input type="text" value="{{email}}" name="email">
+                {{!-- <p class="text-muted mb-0">{{email}}</p> --}}
               </div>
             </div>
             <hr>
@@ -67,7 +72,8 @@
                 <p class="mb-0">Phone</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{phone}}</p>
+                <input type="text" value="{{phone}}" name="phone">
+                {{!-- <p class="text-muted mb-0">{{phone}}</p> --}}
               </div>
             </div>
             <hr>
@@ -76,7 +82,8 @@
                 <p class="mb-0">Password</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">*********</p>
+                <input type="password" value="{{password}}" name="password">
+                {{!-- <p class="text-muted mb-0">*********</p> --}}
               </div>
             </div>
             <hr>
@@ -85,7 +92,8 @@
                 <p class="mb-0">Address</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{address}}</p>
+                <input type="text" value="{{address}}" name="address">
+                {{!-- <p class="text-muted mb-0">{{address}}</p> --}}
               </div>
             </div>
             <hr>
@@ -104,13 +112,21 @@
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{reports}}</p>
-              </div>
+              </div> 
             </div>
+            <hr>
+            <div class="row">
+                <span><button type="submit" class="btn btn-outline-primary ms-1 w-100">Save</button></span>
+              </div>
+            </div>      
           </div>
         </div>
       </div>
     </div>
   </div>
-   <button type="submit" class="btn btn-outline-primary ms-1">Save</button>
+  {{/with}}
+  {{#if errorMessage}}
+     <p>{{errorMessage}}</p>
+    {{/if}}
 </section>
 </form>
