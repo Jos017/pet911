@@ -128,9 +128,43 @@ router.get("/edit-userProfile", async (req, res) => {
 }) 
 
 router.post("/edit-userProfile", (req, res) => {
-  const {username,} = req.body
+  const {username, firstName, lastName, email, password, phone, address} = req.body
   const userId = req.session.user._id
-  User.findByIdAndUpdate(userId, {username}, {new: true})
+  if (!username) {
+    console.log("1")
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide a username.",
+    });
+  } 
+
+  if(!email){
+    console.log("3")
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide a email.",
+    });
+  } 
+
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+  if (!regex.test(password)) {
+    return res.status(400).render("auth/signup", {
+      errorMessage:
+        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+    });
+  }
+
+  if(!phone){
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide a phone number."
+    });
+  }
+
+  if(!address){
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please provide an address."
+    });
+  }
+  User.findByIdAndUpdate(userId, {username, firstName, lastName, email, password, phone, address}, {new: true})
   .then((userUpdate) => {
     req.session.user = userUpdate
     res.redirect("/user/user-profile")
