@@ -16,6 +16,7 @@ const Report =require("../models/Report.model")
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const fileUploader = require("..//config/cloudinary")
 
 // Admin Sign up
 router.get("/admin-signup",isLoggedOut,(req, res) => {
@@ -91,9 +92,8 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 // User
-router.post("/signup", (req, res) => {
+router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, res) => {
   const { username, firstName, lastName, email, password, phone, address, check } = req.body;
-  
   console.log(req.body)
   // return
   
@@ -162,6 +162,7 @@ router.post("/signup", (req, res) => {
           lastName, 
           email, 
           phone, 
+          profilePic:req.file.path, 
           address,
           check,
           password: hashedPassword,
@@ -169,9 +170,12 @@ router.post("/signup", (req, res) => {
         });
       })
       .then((user) => {
+        console.log(user)
         // Bind the user to the session object
         req.session.user = user;
+        
         res.redirect("/user/user-profile");
+     
       })
       .catch((error) => {
         console.log(error)
@@ -235,8 +239,10 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         }
         console.log(user)
         req.session.user = user;
+        console.log(user)
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/user/user-profile");
+        
       });
     })
 

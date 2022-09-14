@@ -36,6 +36,12 @@ const userSchema = new Schema(
       required: [true, 'phone missing']
     },
 
+    profilePic:{
+      type: String,
+      default: ""
+    },
+
+
     address:{
       type: String,
       required: [true, 'address missing']
