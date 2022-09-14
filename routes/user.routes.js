@@ -6,7 +6,8 @@ const { populate } = require("../models/Report.model");
 // Models Required
 const Report = require("../models/Report.model");
 const User = require("../models/User.model");
-const Admin = require("../models/Admin.model")
+const Admin = require("../models/Admin.model");
+const Pet = require("../models/Pet.model");
 
 /* GET User Profile */
 router.get("/user-profile", (req, res, next) => {
@@ -26,11 +27,13 @@ router.get("/user-profile", (req, res, next) => {
   if (userPrivileges === 'user') {
     User.findById(userId)
     .then(info =>{
-      console.log("Informacion de usuario", info)
-      res.render("user/user-profile",info);
+    return info.populate("pets")
+  })
+    .then((infoPopulate) =>{
+      res.render("user/user-profile",infoPopulate)
     })
     .catch(error=>{
-      console.log()
+      console.log(error)
     })
   }
 });
@@ -55,13 +58,54 @@ router.get("/my-pets", (req, res, next) => {
 
 /* GET New Report */
 router.get("/new-report", (req, res, next) => {
-  res.render("user/new-report");
+  const userId = req.session.user._id;
+  User.findById(userId)
+    .then((userFound) => {
+      return userFound.populate('pets');
+    })
+    .then((userWithPets) => {
+      console.log(userWithPets);
+      res.render("user/new-report", userWithPets);
+    })
+    .catch((err) => console.log(err));
 })
 
 /* POST New Report */
 router.post("/new-report", (req, res) => {
   const {petName, situation, foundStatus, date} = req.body;
   const userId = req.session.user._id;
+  
+  if (!petName) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'Please provide a Pet name.'
+    });
+  }
+
+  if (!date) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'Give a valid date'
+    });
+  }
+
+  if (!situation) {
+    return res.status(400).render('user/new-report', {
+      errorMessage: 'We need some information about your report, please provide some details'
+    });
+  }
+
+  // User.findById(userId)
+  //   .then((userFound) => {
+  //     const { pets } = userFound;
+  //     if(pets.length < 1) {
+  //       return res.status(400).render("user/new-report", {
+  //         errorMessage: "No pet registered, register your pet"
+  //       });
+  //     }
+  //     pets.forEach( pet => {
+  //       if ()
+  //     });
+  //   });
+  
   Report.create({
     petName,
     situation,
@@ -69,7 +113,10 @@ router.post("/new-report", (req, res) => {
     foundStatus,
     userId: userId
   })
-    .then(console.log('New Report added'))
+    .then(() => {
+      console.log('New Report added')
+      res.redirect('/pet/pet-reports')
+    })
     .catch((err) => console.log(err));
 })
  
