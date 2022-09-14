@@ -1,6 +1,6 @@
 <section class="vh-100" style="background-color: #F8D046;">
   <h1>Register your Pet</h1>
-  <form class="m-5 d-flex flex-column align-items-center" action="/pet/pet-signup" method="post">
+  <form class="m-5 d-flex flex-column align-items-center" action="/pet/pet-signup" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
       <label for="exampleInputPassword1">Pet name </label>
@@ -16,10 +16,12 @@
         <option value="5">other</option>
       </select>
     </div>
+  
     <div class="form-group">
-      <label for="exampleInputPassword1">Pet photos</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Last Name" name="picture">
-    </div>
+      <label for="exampleInputPassword1">Add your pet picture</label>
+      <input type="file" class="form-control" id="exampleInputPassword1"  name="petPic">
+   </div>
+
     <div class="form-floating my-3">
       <textarea name="description" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
       <label for="floatingTextArea">Describe your pet</label>

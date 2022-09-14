@@ -15,10 +15,10 @@ const petSchema = new Schema(
         required: true,
         enum: ['1', '2', '3', '4', '5'],
     },
-    picture:{
-        type:String,
-        required: true,
-    },
+    petPic:{
+        type: String,
+        default: ""
+      },
     description: {
         type: String,
     },
