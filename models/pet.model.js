@@ -13,7 +13,7 @@ const petSchema = new Schema(
     specie: {
         type: String,
         required: true,
-        enum: ['1', '2', '3', '4', '5'],
+        enum: ['dog', 'cat', 'pig', 'bird', 'other'],
     },
     petPic:{
         type: String,
