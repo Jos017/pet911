@@ -55,7 +55,7 @@
   <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm" style="background-color:#EEEEEE;">
     <img class="me-3" src="/images/Lupa.png" alt="" width="48" height="38" 🔎>
     <div class="lh-1">
-      <h1 style="color:black;">Pet Reports</h1> 
+      <h1 style="color:black;">Pet Reports - {{userPrivileges}}</h1> 
     </div>
   </div>
 
@@ -82,6 +82,10 @@
         <p>Pet Situation: {{situation}}</p>
         <p>Status: {{foundStatus}}</p>
         <p>Date of Report: {{date}}</p>
+        <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
+        {{#if privilegesStatus}}
+          <a href="/user/delete-report/{{_id}}" class="btn btn-primary">Delete</a>
+        {{/if}}
       </div>
     </div>
     {{/each}}

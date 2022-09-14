@@ -112,10 +112,35 @@ router.post("/new-report", (req, res) => {
     petPicture,
     userId: userId
   })
-    .then(() => {
+    .then((newReport) => {
+      // const newReportId = newReport._id;
+      return User.findByIdAndUpdate(userId,{$push:{reports:newReport._id}},{new:true})
+    })
+    .then((newUser) => {
+      req.session.user = newUser;
+      console.log(newUser);
       res.redirect('/pet/pet-reports')
     })
     .catch((err) => console.log(err));
+})
+
+/* GET Edit Report */
+router.get("/edit-report/:reportId", (req, res) => {
+  // const {petName, situation, foundStatus, date } = req.body;
+  const reportsMade = req.session.user.reports;
+  const reportId = req.params.reportId;
+  // Report.findById(reportId)
+  const report = reportsMade.find((id) => (id == reportId))
+  if (report) {
+    console.log('Se encontro report', report)
+    Report.findById(reportId)
+      .then((report) => {
+        res.render('user/edit-report', report)
+      })
+  } else {
+    res.send('<h1>No puedes editar este report, no es tuyo</h1>')
+  }
+  // res.send('<h1>Este no es tu reporte</h1>')
 })
  
 // edit user

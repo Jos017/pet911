@@ -13,7 +13,13 @@ const fileUploader = require("..//config/cloudinary")
 /* GET Pet Reports */
 router.get("/pet-reports" ,(req, res, next) => {
   const { filter } = req.query;
-
+  const userPrivileges = req.session.user.userPrivileges;
+  let privilegesStatus;
+  if (userPrivileges === 'admin') {
+    privilegesStatus = true;
+  } else if (userPrivileges === 'user') {
+    privilegesStatus = false;
+  }
   // Filtrando los reportes
   if (!filter || filter === '0') {
     Report.find()
@@ -34,8 +40,12 @@ router.get("/pet-reports" ,(req, res, next) => {
           }
         report.foundStatus = value;
       })
-
-      res.render('pet/pet-reports', { reportsFiltered });
+      const reportsInfo = {
+        reportsFiltered,
+        userPrivileges,
+        privilegesStatus
+      }
+      res.render('pet/pet-reports', reportsInfo);
     })
     .catch((err) => console.log(err));
   } else {
@@ -57,8 +67,12 @@ router.get("/pet-reports" ,(req, res, next) => {
         }
         report.foundStatus = value;
       })
-
-      res.render('pet/pet-reports', { reportsFiltered });
+      const reportsInfo = {
+        reportsFiltered,
+        userPrivileges,
+        privilegesStatus
+      }
+      res.render('pet/pet-reports', reportsInfo);
     })
     .catch((err) => console.log(err));
   }
@@ -97,6 +111,7 @@ router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
     return User.findByIdAndUpdate(userId,{$push:{pets:newPet._id}},{new:true})
     })
   .then((newUser) => {
+    req.session.user = newUser;
     res.redirect(`/pet/pet-profile/${newPetId}`)
   })
 })
