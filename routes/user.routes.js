@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 const mongoose = require("mongoose");
-const { populate } = require("../models/Report.model");
 
 // Models Required
 const Report = require("../models/Report.model");
@@ -72,9 +71,8 @@ router.get("/new-report", (req, res, next) => {
 
 /* POST New Report */
 router.post("/new-report", (req, res) => {
-  const {petName, situation, foundStatus, date} = req.body;
+  const {petName, situation, foundStatus, date, petPicture} = req.body;
   const userId = req.session.user._id;
-  
   if (!petName) {
     return res.status(400).render('user/new-report', {
       errorMessage: 'Please provide a Pet name.'
@@ -111,10 +109,10 @@ router.post("/new-report", (req, res) => {
     situation,
     date,
     foundStatus,
+    petPicture,
     userId: userId
   })
     .then(() => {
-      console.log('New Report added')
       res.redirect('/pet/pet-reports')
     })
     .catch((err) => console.log(err));

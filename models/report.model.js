@@ -26,6 +26,9 @@ const reportSchema = new Schema(
       required: true,
       enum:['1', '2', '3'],
     },
+    petPicture: {
+      type: String,
+    },
     userId: { 
       type: Schema.Types.ObjectId,
       ref: 'User'

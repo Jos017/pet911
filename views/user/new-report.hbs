@@ -25,11 +25,20 @@
         <option value="3">With its owner</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="petPicture">Pet name </label>
+      <select class="form-select" aria-label="Picture select" name="petPicture">
+        <option selected>Select the picture of the pet to report</option>
+        {{#each pets}}
+            <option style="background-image:url({{picture}});" value="{{picture}}">{{picture}}</option>  
+        {{/each}}
+      </select>
+    </div>
     <div class="form-floating my-3">
       <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
       <label for="floatingTextArea">Describe your pet situation</label>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Create Report</button>
     {{#if errorMessage}}
       <p>{{errorMessage}}</p>
     {{/if}}
