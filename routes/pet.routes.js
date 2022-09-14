@@ -12,9 +12,31 @@ const mongoose = require("mongoose")
 /* GET Pet Reports */
 router.get("/pet-reports", (req, res, next) => {
   const { filter } = req.query;
-  // Report.find({})
+  
   // Filtrando los reportes
-  res.render("pet/pet-reports");
+  const reportsArrayPopulated = []
+  Report.find({foundStatus: filter})
+    .populate({ path: 'userId'})
+    .then ((reportsFiltered) => {
+      reportsFiltered.forEach((report) => {
+        let value = '';
+        switch (report.foundStatus) {
+          case '1': 
+            value = 'Lost'
+            break;
+          case '2':
+            value = 'Lost but not with its owner'
+            break;
+          case '3':
+            value = 'Lost but not with its owner'
+            break;
+        }
+        report.foundStatus = value;
+      })
+
+      res.render('pet/pet-reports', { reportsFiltered });
+    })
+    .catch((err) => console.log(err))
 });
 
 /* GET Pet Signup */
