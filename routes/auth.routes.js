@@ -16,7 +16,7 @@ const Report =require("../models/Report.model")
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-const fileUploader = require("..//config/cloudinary")
+const fileUploader = require("..//config/cloudinary");
 
 // Admin Sign up
 router.get("/admin-signup",isLoggedOut,(req, res) => {
