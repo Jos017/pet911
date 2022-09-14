@@ -1,6 +1,7 @@
 
 <form action="/user/edit-userProfile" method="post">
 <section style="background-color: #eee;">
+  {{#with currentUser}}
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
@@ -29,6 +30,7 @@
                 <p class="mb-0">Username</p>
               </div>
               <div class="col-sm-9">
+                
                 <input type="text" value="{{username}}" name="username">
                 {{!-- <p class="text-muted mb-0">{{username}}</p> --}}
 
@@ -122,5 +124,9 @@
       </div>
     </div>
   </div>
+  {{/with}}
+  {{#if errorMessage}}
+     <p>{{errorMessage}}</p>
+    {{/if}}
 </section>
 </form>
