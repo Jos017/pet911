@@ -72,5 +72,24 @@ router.post("/new-report", (req, res) => {
     .then(console.log('New Report added'))
     .catch((err) => console.log(err));
 })
+ 
+// edit user
+router.get("/edit-userProfile", async (req, res) => {
+  const edit = await User.findById(req.session.user._id)
+  console.log(edit)
+  res.render("user/edit-userProfile", edit)
+}) 
+
+router.post("/edit-userProfile", (req, res) => {
+  const {username,} = req.body
+  const userId = req.session.user._id
+  User.findByIdAndUpdate(userId, {username}, {new: true})
+  .then((userUpdate) => {
+    req.session.user = userUpdate
+    res.redirect("/user/user-profile")
+  })
+ 
+})
+
 
 module.exports = router;

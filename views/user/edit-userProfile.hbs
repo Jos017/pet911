@@ -1,0 +1,116 @@
+
+<form action="/user/edit-userProfile" method="post">
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{firstName}} {{lastName}}</h5>
+            <p class="text-muted mb-1">{Pais}</p>
+            <p class="text-muted mb-4">{Direccion}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="/user/my-pets"><button type="button" class="btn btn-primary">View Pets🔎</button></a>
+              <a href="/pet/pet-reports"><button type="button" class="btn btn-primary ms-1">View Reports❗</button></a>
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="/pet/pet-signup"><button type="button" class="btn btn-outline-primary ms-1">Regist your pet 🐶</button></a>
+            </div>
+            </div>
+          </div>
+        </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Username</p>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" value="{{username}}" name="username">
+                {{!-- <p class="text-muted mb-0">{{username}}</p> --}}
+
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">First Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{firstName}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Last Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{lastName}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{phone}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Password</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">*********</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{address}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Pets Registered</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{pets}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Reports made</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{reports}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <button type="submit" class="btn btn-outline-primary ms-1">Save</button>
+</section>
+</form>
