@@ -113,7 +113,10 @@ router.post("/new-report", (req, res) => {
     foundStatus,
     userId: userId
   })
-    .then(console.log('New Report added'))
+    .then(() => {
+      console.log('New Report added')
+      res.redirect('/pet/pet-reports')
+    })
     .catch((err) => console.log(err));
 })
 
