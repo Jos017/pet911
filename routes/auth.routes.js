@@ -3,6 +3,7 @@ const router = require("express").Router();
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const axios = require("axios")
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
@@ -171,8 +172,35 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
       })
       .then((user) => {
         console.log(user)
-        // Bind the user to the session object
+        // Bind the user to the session objecttemplate_tx9o6lw
         req.session.user = user;
+        const data = {
+          service_id: 'service_1gf2saa',
+          template_id: 'template_tx9o6lw',
+          user_id: 'ZO05l9FeQQYU7dzLz',
+          template_params: {
+              username: user.username,
+              email:user.email
+          },
+          accessToken: "0HYAhyKOCsAu4SB8CGIHO"
+        };
+        const url = "https://api.emailjs.com/api/v1.0/email/send";
+        axios({
+          method: "post",
+          url,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify(data),
+        })
+          .then((result) => {
+            console.log(result);
+            console.log("Correo enviado :)");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        
         
         res.redirect("/user/user-profile");
      
@@ -270,3 +298,5 @@ router.get("/logout", isLoggedIn, (req, res) => {
 
 
 module.exports = router;
+
+

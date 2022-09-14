@@ -1,12 +1,15 @@
 const router = require("express").Router();
-
+const bcrypt = require("bcrypt")
 const mongoose = require("mongoose");
 
+
+const saltRounds = 10
 // Models Required
 const Report = require("../models/Report.model");
 const User = require("../models/User.model");
 const Admin = require("../models/Admin.model");
 const Pet = require("../models/Pet.model");
+
 
 /* GET User Profile */
 router.get("/user-profile", (req, res, next) => {
@@ -145,20 +148,103 @@ router.get("/edit-report/:reportId", (req, res) => {
  
 // edit user
 router.get("/edit-userProfile", async (req, res) => {
-  const edit = await User.findById(req.session.user._id)
-  console.log(edit)
-  res.render("user/edit-userProfile", edit)
+  const currentUser = await User.findById(req.session.user._id)
+  console.log(currentUser)
+  res.render("user/edit-userProfile", {currentUser})
 }) 
 
 router.post("/edit-userProfile", (req, res) => {
-  const {username,} = req.body
+  const {username, firstName, lastName, email, password, phone, address} = req.body
   const userId = req.session.user._id
-  User.findByIdAndUpdate(userId, {username}, {new: true})
-  .then((userUpdate) => {
-    req.session.user = userUpdate
-    res.redirect("/user/user-profile")
-  })
- 
+  const currentUser = req.session.user
+  if (!username) {
+    console.log("1")
+    return res.status(400).render("user/edit-userProfile", {
+      errorMessage: "Please provide a username.", currentUser
+    });
+  } 
+
+  if(!email){
+    console.log("3")
+    return res.status(400).render("user/edit-userProfile", {
+      errorMessage: "Please provide a email.", currentUser
+    });
+  } 
+
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+  if (!regex.test(password)) {
+    return res.status(400).render("user/edit-userProfile", {
+      errorMessage:
+        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.", currentUser
+    });
+  }
+
+  if(!phone){
+    return res.status(400).render("user/edit-userProfile", {
+      errorMessage: "Please provide a phone number.", currentUser
+    });
+  }
+
+  if(!address){
+    return res.status(400).render("user/edit-userProfile", {
+      errorMessage: "Please provide an address.", currentUser
+    });
+  }
+  // User.findByIdAndUpdate(userId, {username, firstName, lastName, email, password, phone, address}, {new: true})
+  // .then((userUpdate) => {
+  //   req.session.user = userUpdate
+  //   res.redirect("/user/user-profile")
+  // })
+  User.findOne({username}).then((founded)=>{
+    if (founded) {
+      return res
+        .status(400)
+        .render("user/edit-userProfile", { errorMessage: "Usernae is already registered.", currentUser });
+    }
+    // if user is not found, create a new user - start with hashing the password
+    console.log("Hola")
+    return bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hashedPassword) => {
+        console.log(hashedPassword)
+        // Create a user and save it in the database
+        return User.findByIdAndUpdate(userId, {
+          username, 
+          firstName,
+          lastName, 
+          email, 
+          phone, 
+          address,
+          password: hashedPassword,  
+        }, {new: true});
+      })
+      .then((userUpdate) => {
+        // console.log(userUpdate)
+        // Bind the user to the session object
+        req.session.user = userUpdate;
+        
+        res.redirect("/user/user-profile");
+      
+      })
+      .catch((error) => {
+        console.log(error)
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res
+            .status(400)
+            .render("user/edit-userProfile",  { errorMessage: error.message, currentUser });
+        }
+        if (error.code === 11000) {
+          return res
+            .status(400)
+            .render("user/edit-userProfile", { errorMessage: "Username need to be unique. The username you chose is already in use.", currentUser });
+        }
+        return res
+          .status(500)
+          .render("user/edit-userProfile", { errorMessage: error.message, currentUser });
+      });
+    }) 
 })
 
 
