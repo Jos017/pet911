@@ -3,6 +3,7 @@ const Pet = require("../models/Pet.model");
 const User = require("../models/User.model");
 const Report = require('../models/Report.model');
 const mongoose = require("mongoose")
+const fileUploader = require("..//config/cloudinary")
 
 /* GET Pet Profile */
 // router.get("/pet-profile", (req, res, next) => {
@@ -10,7 +11,7 @@ const mongoose = require("mongoose")
 // });
 
 /* GET Pet Reports */
-router.get("/pet-reports", (req, res, next) => {
+router.get("/pet-reports" ,(req, res, next) => {
   const { filter } = req.query;
 
   // Filtrando los reportes
@@ -64,29 +65,30 @@ router.get("/pet-reports", (req, res, next) => {
 });
 
 /* GET Pet Signup */
-router.get("/pet-signup", (req, res, next) => {
+router.get("/pet-signup",(req, res, next) => {
   res.render("pet/pet-signup");
 });
 
-router.post("/pet-signup", (req, res) => {
-  const {petName, specie, picture, description} = req.body
+router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
+  const {petName, specie, petPic, description} = req.body
   const userId = req.session.user._id
+  console.log(req.body)
   let newPetId;
   if (!petName) {
     return res
       .status(400)
       .render("pet/pet-signup", { errorMessage: "Please provide your pet name."});  
   }
-  if (!picture) {
-    return res
-      .status(400)
-      .render("pet/pet-signup", { errorMessage: "Please provide a picture of your pet."});  
-  }
+  // if (!petPic) {
+  //   return res
+  //     .status(400)
+  //     .render("pet/pet-signup", { errorMessage: "Please provide a picture of your pet."});  
+  // }
  
   Pet.create({
     petName,
     specie,
-    picture,
+    petPic:req.file.path,
     description,
     owner: userId
   })
