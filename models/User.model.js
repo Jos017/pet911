@@ -38,7 +38,7 @@ const userSchema = new Schema(
 
     profilePic:{
       type: String,
-      default: ""
+      default: "/images/userProfile.jpg"
     },
 
 
