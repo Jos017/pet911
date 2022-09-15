@@ -84,58 +84,55 @@ router.get("/new-report", (req, res, next) => {
 router.post("/new-report", (req, res) => {
   const {petName, situation, foundStatus, date, petPicture} = req.body;
   const userId = req.session.user._id;
-  if (!petName) {
-    return res.status(400).render('user/new-report', {
-      errorMessage: 'Please provide a Pet name.',
-      userInSession: req.session.user
-    });
-  }
-
-  if (!date) {
-    return res.status(400).render('user/new-report', {
-      errorMessage: 'Give a valid date',
-      userInSession: req.session.user
-    });
-  }
-
-  if (!situation) {
-    return res.status(400).render('user/new-report', {
-      errorMessage: 'We need some information about your report, please provide some details',
-      userInSession: req.session.user
-    });
-  }
-
-  // User.findById(userId)
-  //   .then((userFound) => {
-  //     const { pets } = userFound;
-  //     if(pets.length < 1) {
-  //       return res.status(400).render("user/new-report", {
-  //         errorMessage: "No pet registered, register your pet"
-  //       });
-  //     }
-  //     pets.forEach( pet => {
-  //       if ()
-  //     });
-  //   });
-  
-  Report.create({
-    petName,
-    situation,
-    date,
-    foundStatus,
-    petPicture,
-    userId: userId
-  })
-    .then((newReport) => {
-      // const newReportId = newReport._id;
-      return User.findByIdAndUpdate(userId,{$push:{reports:newReport._id}},{new:true})
+  User.findById(userId)
+    .then((userFound) => {
+      return userFound.populate('pets');
     })
-    .then((newUser) => {
-      req.session.user = newUser;
-      console.log(newUser);
-      res.redirect('/pet/pet-reports')
+    .then((userWithPets) => {
+      console.log(userWithPets);
+      if (!petName) {
+        return res.status(400).render('user/new-report', {
+          userWithPets,
+          errorMessage: 'Please provide a Pet name.',
+          userInSession: req.session.user
+        });
+      }
+    
+      if (!date) {
+        return res.status(400).render('user/new-report', {
+          userWithPets,
+          errorMessage: 'Give a valid date',
+          userInSession: req.session.user
+        });
+      }
+    
+      if (!situation) {
+        return res.status(400).render('user/new-report', {
+          userWithPets,
+          errorMessage: 'We need some information about your report, please provide some details',
+          userInSession: req.session.user
+        });
+      }
+
+      return Report.create({
+        petName,
+        situation,
+        date,
+        foundStatus,
+        petPicture,
+        userId: userId
+      })
+        .then((newReport) => {
+          // const newReportId = newReport._id;
+          return User.findByIdAndUpdate(userId,{$push:{reports:newReport._id}},{new:true})
+        })
+        .then((newUser) => {
+          req.session.user = newUser;
+          console.log(newUser);
+          res.redirect('/pet/pet-reports')
+        })
+        .catch((err) => console.log(err));
     })
-    .catch((err) => console.log(err));
 })
 
 /* GET Edit Report */
