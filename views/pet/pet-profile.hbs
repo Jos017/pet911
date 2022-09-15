@@ -66,17 +66,19 @@
 
 {{#with petInfo}}
 <form action="">
-<section style="background-color: #eee;">
+<section style="background-color: #fbf4df">
   <div class="container py-5">
-    <div class="row">
+    <div class="row" style="flex-direction: column;
+    align-content: center;
+    align-items: center;">
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
             <img src="{{petPic}}" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">{{petName}}</h5>
+              class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+            <h5 class="my-3" style="color:##263238; font-wa">{{petName}}</h5>
             <div class="d-flex justify-content-center mb-2">
-            <a href="/pet/pet-reports"><button type="button" class="btn btn-outline-primary ms-1">View Reports ❗</button></a>
+            <a href="/pet/pet-reports"><button type="button"  class="btn btn-outline-primary ms-1">View Reports ❗</button></a>
             </div>
             <div class="d-flex justify-content-center mb-2">
             <a href="/user/user-profile"><button type="button" class="btn btn-outline-primary ms-1">User Profile 👤</button></a>
@@ -84,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-8">
+      <div class="col-lg-6">
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
@@ -94,7 +96,7 @@
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{petName}}</p>
               </div>
-            </div>
+            </div> 
            <hr>
             <div class="row">
               <div class="col-sm-3">
