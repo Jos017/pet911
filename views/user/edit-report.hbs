@@ -1,13 +1,18 @@
 <section class="vh-100" style="background-color: #F8D046;">
   <h1>Edit your report</h1>
-  <form class="m-5 d-flex flex-column align-items-center" action="/user/edit-report" method="post">
+  <form class="m-5 d-flex flex-column align-items-center" action="/user/edit-report/{{_id}}" method="post">
     <div class="form-group">
-      <label for="petName">Pet name </label>
+      <label for="petName">Pet name</label>
       <input type="text" class="form-control" id="petName" name="petName" placeholder="Pet Name" value="{{petName}}" disabled="disabled"/>
     </div>
-    <div class="form-group">
-      <label for="date">Date of Loss</label>
-      <input type="date" class="form-control" id="date" name="date" value="date"/>
+    <div class="form-group d-flex justify-content-center">
+      <!--<div id="image-dropdown">
+        <input type="radio" id="line1" name="{{petPicture}}" value="1" checked="checked" />
+        <label for="line1" style='background:url("{{petPicture}}") 50% 50%;'></label>
+        <input type="radio" id="line2" name="{{petPicture}}" value="2" />
+        <label for="line2"></label>
+      </div>-->
+      <img src="{{petPicture}}" alt="{{petName}} picture" class="w-50 my-3">
     </div>
     <div class="form-group">
       <label>Pet Status</label>
@@ -18,20 +23,11 @@
         <option value="3">With its owner</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="petPicture">Pet name </label>
-      <select class="form-select" aria-label="Picture select" name="petPicture">
-        <option selected>Select the picture of the pet to report</option>
-        {{#each pets}}
-            <option style="background-image:url({{petPic}});" value="{{petPic}}">{{petPic}}</option>  
-        {{/each}}
-      </select>
-    </div>
     <div class="form-floating my-3">
       <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
       <label for="floatingTextArea">Describe your pet situation</label>
     </div>
-    <button type="submit" class="btn btn-primary">Create Report</button>
+    <button type="submit" class="btn btn-primary">Edit Report Status</button>
     {{#if errorMessage}}
       <p>{{errorMessage}}</p>
     {{/if}}

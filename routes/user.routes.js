@@ -145,7 +145,22 @@ router.get("/edit-report/:reportId", (req, res) => {
   }
   // res.send('<h1>Este no es tu reporte</h1>')
 })
- 
+
+/* POST Edit Report Status */
+router.post("/edit-report/:reportId", (req, res) => {
+  const { foundStatus, situation } = req.body;
+  const { reportId } = req.params
+  console.log(req.body);
+  Report.findByIdAndUpdate(reportId, {
+    foundStatus, situation 
+  }, {new: true})
+    .then((reportUpdated) => {
+      res.redirect(`/pet/pet-reports`);
+    }).
+    catch((err) => console.log(err))
+}) 
+
+
 // edit user
 router.get("/edit-userProfile", async (req, res) => {
   const currentUser = await User.findById(req.session.user._id)
