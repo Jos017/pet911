@@ -1,36 +1,55 @@
-<section class="vh-100" style="background-color: #F8D046;">
-  <h1>Register your Pet</h1>
-  <form class="m-5 d-flex flex-column align-items-center" action="/pet/pet-signup" method="post" enctype="multipart/form-data">
+<section style="background-color: #F8D046;">
+   
+    <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="/images/registPet.jpg"
+                alt="login form" class="img-fluid" style= "border-radius: 1rem 0 0 1rem;max-width: 100%;height: 100%;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                 <h1 class="text-center my-5">Register your Pet 🐶✨</h1>
+                <form class="" action="/pet/pet-signup" method="post" enctype="multipart/form-data">
 
-    <div class="form-group">
-      <label for="exampleInputPassword1">Pet name </label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="User name" name="petName">
-    </div>
-    <div class="form-group">
-      <label for="">Specie</label>
-      <select class="form-select" aria-label="Default select example" name="specie">
-        <option value="dog">dog</option>
-        <option value="cat">cat</option>
-        <option value="pig">pig</option>
-        <option value="bird">bird</option>
-        <option value="other">other</option>
-      </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="exampleInputPassword1">Add your pet picture</label>
-      <input type="file" class="form-control" id="exampleInputPassword1"  name="petPic">
-   </div>
+                   <div class="form-group">
+                     <label for="exampleInputPassword1">Pet name </label>
+                     <input type="text" class="form-control" id="exampleInputPassword1" placeholder="User name" name="petName">
+                   </div>
+                   <div class="form-group">
+                     <label for="">Specie</label>
+                     <select class="form-select" aria-label="Default select example" name="specie">
+                       <option value="dog">dog</option>
+                       <option value="cat">cat</option>
+                       <option value="pig">pig</option>
+                       <option value="bird">bird</option>
+                       <option value="other">other</option>
+                     </select>
+                   </div>
+                   <div class="form-group">
+                     <label for="exampleInputPassword1">Add your pet picture</label>
+                     <input type="file" class="form-control" id="exampleInputPassword1"  name="petPic">
+                  </div>
+                
+                   <div class="form-floating my-5">
+                     <textarea name="description" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
+                     <label for="floatingTextArea">Describe your pet</label>
+                   </div>
+                   <button type="submit" class="btn btn-primary">Register</button>
+                   {{#if errorMessage}}
+                    <p>{{errorMessage}}</p>
+                   {{/if}}
+                 </form>
 
-    <div class="form-floating my-3">
-      <textarea name="description" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
-      <label for="floatingTextArea">Describe your pet</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-    {{#if errorMessage}}
-     <p>{{errorMessage}}</p>
-    {{/if}}
-  </form>
+    </div>
 </section>
 
 
