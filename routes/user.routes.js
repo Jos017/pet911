@@ -74,19 +74,22 @@ router.post("/new-report", (req, res) => {
   const userId = req.session.user._id;
   if (!petName) {
     return res.status(400).render('user/new-report', {
-      errorMessage: 'Please provide a Pet name.'
+      errorMessage: 'Please provide a Pet name.',
+      userInSession: req.session.user
     });
   }
 
   if (!date) {
     return res.status(400).render('user/new-report', {
-      errorMessage: 'Give a valid date'
+      errorMessage: 'Give a valid date',
+      userInSession: req.session.user
     });
   }
 
   if (!situation) {
     return res.status(400).render('user/new-report', {
-      errorMessage: 'We need some information about your report, please provide some details'
+      errorMessage: 'We need some information about your report, please provide some details',
+      userInSession: req.session.user
     });
   }
 
@@ -155,8 +158,7 @@ router.post("/edit-report/:reportId", (req, res) => {
     catch((err) => console.log(err))
 }) 
 
-
-// edit user
+/* GET Edit User Profile */
 router.get("/edit-userProfile", async (req, res) => {
   const currentUser = await User.findById(req.session.user._id)
   console.log(currentUser)
@@ -170,14 +172,18 @@ router.post("/edit-userProfile", (req, res) => {
   if (!username) {
     console.log("1")
     return res.status(400).render("user/edit-userProfile", {
-      errorMessage: "Please provide a username.", currentUser
+      errorMessage: "Please provide a username.",
+      currentUser,
+      userInSession: req.session.user
     });
   } 
 
   if(!email){
     console.log("3")
     return res.status(400).render("user/edit-userProfile", {
-      errorMessage: "Please provide a email.", currentUser
+      errorMessage: "Please provide a email.",
+      currentUser,
+      userInSession: req.session.user
     });
   } 
 
@@ -185,32 +191,37 @@ router.post("/edit-userProfile", (req, res) => {
 
   if (!regex.test(password)) {
     return res.status(400).render("user/edit-userProfile", {
-      errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.", currentUser
+      errorMessage: "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+      currentUser,
+      userInSession: req.session.user
     });
   }
 
   if(!phone){
     return res.status(400).render("user/edit-userProfile", {
-      errorMessage: "Please provide a phone number.", currentUser
+      errorMessage: "Please provide a phone number.",
+      currentUser,
+      userInSession: req.session.user
     });
   }
 
   if(!address){
     return res.status(400).render("user/edit-userProfile", {
-      errorMessage: "Please provide an address.", currentUser
+      errorMessage: "Please provide an address.",
+      currentUser,
+      userInSession: req.session.user
     });
   }
-  // User.findByIdAndUpdate(userId, {username, firstName, lastName, email, password, phone, address}, {new: true})
-  // .then((userUpdate) => {
-  //   req.session.user = userUpdate
-  //   res.redirect("/user/user-profile")
-  // })
+  
   User.findOne({username}).then((founded)=>{
     if (founded) {
       return res
         .status(400)
-        .render("user/edit-userProfile", { errorMessage: "Usernae is already registered.", currentUser });
+        .render("user/edit-userProfile", {
+          errorMessage: "Usernae is already registered.",
+          currentUser,
+          userInSession: req.session.user
+        });
     }
     // if user is not found, create a new user - start with hashing the password
     console.log("Hola")
@@ -243,16 +254,28 @@ router.post("/edit-userProfile", (req, res) => {
         if (error instanceof mongoose.Error.ValidationError) {
           return res
             .status(400)
-            .render("user/edit-userProfile",  { errorMessage: error.message, currentUser });
+            .render("user/edit-userProfile", {
+              errorMessage: error.message,
+              currentUser,
+              userInSession: req.session.user
+            });
         }
         if (error.code === 11000) {
           return res
             .status(400)
-            .render("user/edit-userProfile", { errorMessage: "Username need to be unique. The username you chose is already in use.", currentUser });
+            .render("user/edit-userProfile", {
+              errorMessage: "Username need to be unique. The username you chose is already in use.",
+              currentUser,
+              userInSession: req.session.user
+            });
         }
         return res
           .status(500)
-          .render("user/edit-userProfile", { errorMessage: error.message, currentUser });
+          .render("user/edit-userProfile", {
+            errorMessage: error.message,
+            currentUser,
+            userInSession: req.session.user
+          });
       });
     }) 
 })

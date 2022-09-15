@@ -29,15 +29,17 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
   
   if (!username) {
     console.log("1")
-    return res.status(400).render("auth/signup", {
+    return res.status(400).render("auth/admin-signup", {
       errorMessage: "Please provide your username.",
+      userInSession: req.session.user
     });
   }
   console.log("ADMINADMINKEY", process.env.ADMIN_KEY)
   if (password !== process.env.ADMIN_KEY) {
     console.log("2")
-    return res.status(400).render("auth/signup", {
+    return res.status(400).render("auth/admin-signup", {
       errorMessage: "Your password does not match credentials",
+      userInSession: req.session.user
     });
   }
 
@@ -46,7 +48,10 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
     if (found) {
       return res
         .status(400)
-        .render("auth/signup", { errorMessage: "Username already taken." });
+        .render("auth/admin-signup", { 
+          errorMessage: "Username already taken.",
+          userInSession: req.session.user
+        });
     }
     console.log("EROROROROROROR",req.body)
 
@@ -74,16 +79,25 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
         if (error instanceof mongoose.Error.ValidationError) {
           return res
             .status(400)
-            .render("auth/signup", { errorMessage: error.message });
+            .render("auth/admin-signup", { 
+              errorMessage: error.message,
+              userInSession: req.session.user
+            });
         }
         if (error.code === 11000) {
           return res
             .status(400)
-            .render("auth/signup", { errorMessage: "Username need to be unique. The username you chose is already in use." });
+            .render("auth/admin-signup", { 
+              errorMessage: "Username need to be unique. The username you chose is already in use.",
+              userInSession: req.session.user
+            });
         }
         return res
           .status(500)
-          .render("auth/signup", { errorMessage: error.message });
+          .render("auth/admin-signup", {
+            errorMessage: error.message,
+            userInSession: req.session.user
+          });
       });
   });
 })
@@ -102,6 +116,7 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
     console.log("1")
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide a username.",
+      userInSession: req.session.user
     });
   } 
 
@@ -109,6 +124,7 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
     console.log("3")
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide a email.",
+      userInSession: req.session.user
     });
   } 
 
@@ -116,20 +132,22 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
 
   if (!regex.test(password)) {
     return res.status(400).render("auth/signup", {
-      errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+      errorMessage: "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+      userInSession: req.session.user
     });
   }
 
   if(!phone){
     return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide a phone number."
+      errorMessage: "Please provide a phone number.",
+      userInSession: req.session.user
     });
   }
 
   if(!address){
     return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide an address."
+      errorMessage: "Please provide an address.",
+      userInSession: req.session.user
     });
   }
   
@@ -140,14 +158,20 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
     if (found) {
       return res
         .status(400)
-        .render("auth/signup", { errorMessage: "Username already taken." });
+        .render("auth/signup", { 
+          errorMessage: "Username already taken.",
+          userInSession: req.session.user
+        });
     }
     
   User.findOne({email}).then((founded)=>{
      if (founded) {
       return res
         .status(400)
-        .render("auth/signup", { errorMessage: "Email is already registered." });
+        .render("auth/signup", {
+          errorMessage: "Email is already registered.",
+          userInSession: req.session.user
+        });
     }
     // if user is not found, create a new user - start with hashing the password
     console.log("Hola")
@@ -210,16 +234,25 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
         if (error instanceof mongoose.Error.ValidationError) {
           return res
             .status(400)
-            .render("auth/signup", { errorMessage: error.message });
+            .render("auth/signup", {
+              errorMessage: error.message,
+              userInSession: req.session.user
+            });
         }
         if (error.code === 11000) {
           return res
             .status(400)
-            .render("auth/signup", { errorMessage: "Username need to be unique. The username you chose is already in use." });
+            .render("auth/signup", {
+              errorMessage: "Username need to be unique. The username you chose is already in use.",
+              userInSession: req.session.user
+            });
         }
         return res
           .status(500)
-          .render("auth/signup", { errorMessage: error.message });
+          .render("auth/signup", {
+            errorMessage: error.message,
+            userInSession: req.session.user
+          });
       });
     })    
   });
@@ -235,7 +268,10 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   if (!username) {
     return res
       .status(400)
-      .render("auth/login", { errorMessage: "Please provide your username." });
+      .render("auth/login", {
+        errorMessage: "Please provide your username.",
+        userInSession: req.session.user
+      });
   }
 
   // Here we use the same logic as above
@@ -244,8 +280,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   if (!regex.test(password)) {
     return res.status(400).render("auth/signup", {
-      errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+      errorMessage: "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+      userInSession: req.session.user
     });
   }
   // Search the database for a user with the username submitted in the form
@@ -255,7 +291,10 @@ router.post("/login", isLoggedOut, (req, res, next) => {
       if (!user) {
         return res
           .status(400)
-          .render("auth/login", { errorMessage: "Wrong credentials." });
+          .render("auth/login", {
+            errorMessage: "Wrong credentials.",
+            userInSession: req.session.user
+          });
       }
 
       // If user is found based on the username, check if the in putted password matches the one saved in the database
@@ -263,7 +302,10 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         if (!isSamePassword) {
           return res
             .status(400)
-            .render("auth/login", { errorMessage: "Wrong credentials." });
+            .render("auth/login", {
+              errorMessage: "Wrong credentials.",
+              userInSession: req.session.user
+            });
         }
         console.log(user)
         req.session.user = user;
@@ -288,7 +330,10 @@ router.get("/logout", isLoggedIn, (req, res) => {
     if (err) {
       return res
         .status(500)
-        .render("auth/logout", { errorMessage: err.message });
+        .render("auth/logout", {
+          errorMessage: err.message,
+          userInSession: req.session.user
+        });
     }
     
     res.redirect("/");

@@ -87,7 +87,10 @@ router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
   if (!petName) {
     return res
       .status(400)
-      .render("pet/pet-signup", { errorMessage: "Please provide your pet name."});  
+      .render("pet/pet-signup", {
+        errorMessage: "Please provide your pet name.",
+        userInSession: req.session.user
+      });  
   }
  
   Pet.create({
@@ -117,13 +120,6 @@ router.get("/pet-profile/:petId", (req, res, next) => {
     })
     .catch((err) => console.log(err));
 });
-  
-  
- 
-  
-
-
-
 
 
 module.exports = router;
