@@ -103,7 +103,7 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
 })
 
 router.get("/signup", isLoggedOut, (req, res) => {
-  res.render("auth/signup", { userInSession: req.session.user });
+  res.render("auth/signup", { userInSession: req.session.user,layout: false });
 });
 
 // User
@@ -116,15 +116,17 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
     console.log("1")
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide a username.",
-      userInSession: req.session.user
+      userInSession: req.session.user,
+      layout: false
     });
   } 
 
   if(!email){
     console.log("3")
-    return res.status(400).render("auth/signup", {
+    return res.status(400).render,("auth/signup", {
       errorMessage: "Please provide a email.",
-      userInSession: req.session.user
+      userInSession: req.session.user,
+      layout: false
     });
   } 
 
@@ -133,21 +135,24 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
   if (!regex.test(password)) {
     return res.status(400).render("auth/signup", {
       errorMessage: "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
-      userInSession: req.session.user
+      userInSession: req.session.user,
+      layout: false
     });
   }
 
   if(!phone){
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide a phone number.",
-      userInSession: req.session.user
+      userInSession: req.session.user,
+      layout: false
     });
   }
 
   if(!address){
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide an address.",
-      userInSession: req.session.user
+      userInSession: req.session.user,
+      layout: false
     });
   }
   
@@ -160,7 +165,8 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
         .status(400)
         .render("auth/signup", { 
           errorMessage: "Username already taken.",
-          userInSession: req.session.user
+          userInSession: req.session.user,
+          layout: false
         });
     }
     
@@ -170,11 +176,11 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
         .status(400)
         .render("auth/signup", {
           errorMessage: "Email is already registered.",
-          userInSession: req.session.user
+          userInSession: req.session.user,
+          layout: false
         });
     }
     // if user is not found, create a new user - start with hashing the password
-    console.log("Hola")
     return bcrypt
       .genSalt(saltRounds)
       .then((salt) => bcrypt.hash(password, salt))
@@ -236,7 +242,8 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
             .status(400)
             .render("auth/signup", {
               errorMessage: error.message,
-              userInSession: req.session.user
+              userInSession: req.session.user,
+              layout: false
             });
         }
         if (error.code === 11000) {
@@ -244,14 +251,16 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
             .status(400)
             .render("auth/signup", {
               errorMessage: "Username need to be unique. The username you chose is already in use.",
-              userInSession: req.session.user
+              userInSession: req.session.user,
+              layout: false
             });
         }
         return res
           .status(500)
           .render("auth/signup", {
             errorMessage: error.message,
-            userInSession: req.session.user
+            userInSession: req.session.user,
+            layout: false
           });
       });
     })    
