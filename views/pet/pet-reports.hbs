@@ -30,9 +30,11 @@
         <p>Pet Situation: {{situation}}</p>
         <p>Status: {{foundStatus}}</p>
         <p>Date of Report: {{date}}</p>
+        {{#if ../../userInSession}}
         <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
-        {{#if privilegesStatus}}
+        {{#if ../../privilegesStatus}}
           <a href="/user/delete-report/{{_id}}" class="btn btn-primary">Delete</a>
+        {{/if}}
         {{/if}}
       </div>
     </div>

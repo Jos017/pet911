@@ -8,11 +8,18 @@ const fileUploader = require("..//config/cloudinary")
 /* GET Pet Reports */
 router.get("/pet-reports" ,(req, res, next) => {
   const { filter } = req.query;
-  const userPrivileges = req.session.user.userPrivileges;
+  console.log(req.query)
+  let userPrivileges;
   let privilegesStatus;
+  if (!req.session.user) {
+    userPrivileges = 'visitor'
+  } else {
+    userPrivileges = req.session.user.userPrivileges;
+  }
   if (userPrivileges === 'admin') {
     privilegesStatus = true;
-  } else if (userPrivileges === 'user') {
+  } 
+  else {
     privilegesStatus = false;
   }
   // Filtrando los reportes
@@ -38,9 +45,15 @@ router.get("/pet-reports" ,(req, res, next) => {
       const reportsInfo = {
         reportsFiltered,
         userPrivileges,
-        privilegesStatus
+        privilegesStatus,
+        userLogged: true
       }
-      res.render('pet/pet-reports',{ reportsInfo, userInSession: req.session.user });
+      console.log('Primer IF', reportsInfo)
+      console.log(req.session.user)
+      res.render('pet/pet-reports',{ 
+        reportsInfo,
+        userInSession: req.session.user
+      });
     })
     .catch((err) => console.log(err));
   } else {
@@ -67,6 +80,7 @@ router.get("/pet-reports" ,(req, res, next) => {
         userPrivileges,
         privilegesStatus
       }
+      console.log('Segundo IF', reportsInfo)
       res.render('pet/pet-reports', { reportsInfo, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
