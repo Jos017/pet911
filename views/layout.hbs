@@ -32,12 +32,14 @@
           <a class="nav-link" href="/recommendations" style="font-size: 17px;">Recommendations 👈</a>
         </li>
       </ul>
+      {{#unless userInSession}}
       <form class="d-flex" role="search" style="margin: 0px 20px 0px 0px;">
       <a href="/auth/login" class="btn btn-outline-dark">Login</a>
       </form>
       <form class="d-flex" role="search" style="margin: 0px 20px 0px 0px;">
       <a href="/auth/signup" class="btn btn-outline-dark">signup</a>
       </form>
+      {{/unless}}
       <form class="d-flex" role="search" style="margin: 0px 20px 0px 0px;">
       <a href="/auth/logout" class="btn btn-outline-dark">Logout</a>
       </form>

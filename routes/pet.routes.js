@@ -5,11 +5,6 @@ const Report = require('../models/Report.model');
 const mongoose = require("mongoose")
 const fileUploader = require("..//config/cloudinary")
 
-/* GET Pet Profile */
-// router.get("/pet-profile", (req, res, next) => {
-//   res.render("pet/pet-profile");
-// });
-
 /* GET Pet Reports */
 router.get("/pet-reports" ,(req, res, next) => {
   const { filter } = req.query;
@@ -45,7 +40,7 @@ router.get("/pet-reports" ,(req, res, next) => {
         userPrivileges,
         privilegesStatus
       }
-      res.render('pet/pet-reports', reportsInfo);
+      res.render('pet/pet-reports',{ reportsInfo, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
   } else {
@@ -72,7 +67,7 @@ router.get("/pet-reports" ,(req, res, next) => {
         userPrivileges,
         privilegesStatus
       }
-      res.render('pet/pet-reports', reportsInfo);
+      res.render('pet/pet-reports', { reportsInfo, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
   }
@@ -80,9 +75,10 @@ router.get("/pet-reports" ,(req, res, next) => {
 
 /* GET Pet Signup */
 router.get("/pet-signup",(req, res, next) => {
-  res.render("pet/pet-signup");
+  res.render("pet/pet-signup", { userInSession: req.session.user });
 });
 
+/* POST Pet Signup*/
 router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
   const {petName, specie, petPic, description} = req.body
   const userId = req.session.user._id
@@ -93,11 +89,6 @@ router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
       .status(400)
       .render("pet/pet-signup", { errorMessage: "Please provide your pet name."});  
   }
-  // if (!petPic) {
-  //   return res
-  //     .status(400)
-  //     .render("pet/pet-signup", { errorMessage: "Please provide a picture of your pet."});  
-  // }
  
   Pet.create({
     petName,
@@ -116,19 +107,16 @@ router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
   })
 })
 
-//Get pet Profile
-
+/* GET Pet profile */
 router.get("/pet-profile/:petId", (req, res, next) => {
-  
   const {petId} =req.params
-
-    Pet.findById(petId)
+  Pet.findById(petId)
     .then((petInfo) => {
       console.log(petInfo);
-      res.render("pet/pet-profile", petInfo);
+      res.render("pet/pet-profile", { petInfo, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
-  });
+});
   
   
  

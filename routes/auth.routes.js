@@ -21,7 +21,7 @@ const fileUploader = require("../config/cloudinary")
 
 // Admin Sign up
 router.get("/admin-signup",isLoggedOut,(req, res) => {
-  res.render("auth/admin-signup")
+  res.render("auth/admin-signup", { userInSession: req.session.user })
 })
 
 router.post("/admin-signup",isLoggedOut,(req, res) => {
@@ -89,7 +89,7 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
 })
 
 router.get("/signup", isLoggedOut, (req, res) => {
-  res.render("auth/signup");
+  res.render("auth/signup", { userInSession: req.session.user });
 });
 
 // User
@@ -226,7 +226,7 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
 });
 
 router.get("/login", isLoggedOut, (req, res) => {
-  res.render("auth/login");
+  res.render("auth/login", { userInSession: req.session.user });
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {

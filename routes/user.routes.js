@@ -18,9 +18,9 @@ router.get("/user-profile", (req, res, next) => {
   if (userPrivileges === 'admin') {
     console.log("User privileges", userPrivileges)
     Admin.findById(userId)
-    .then(info =>{
-      console.log("Informacion de usuario", info)
-      res.render("user/user-profile",info);
+    .then(userInfo =>{
+      console.log("Informacion de usuario", userInfo)
+      res.render("user/user-profile", { userInfo, userInSession: req.session.user });
     })
     .catch(error=>{
       console.log()
@@ -31,8 +31,8 @@ router.get("/user-profile", (req, res, next) => {
     .then(info =>{
     return info.populate("pets")
   })
-    .then((infoPopulate) =>{
-      res.render("user/user-profile",infoPopulate)
+    .then((userInfo) =>{
+      res.render("user/user-profile", { userInfo, userInSession: req.session.user })
     })
     .catch(error=>{
       console.log(error)
@@ -49,14 +49,10 @@ router.get("/my-pets", (req, res, next) => {
     })
     .then((userWithPets) => {
       console.log(userWithPets);
-      res.render("user/my-pets", userWithPets);
+      res.render("user/my-pets", { userWithPets, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
-    
-  
 });
-
-
 
 /* GET New Report */
 router.get("/new-report", (req, res, next) => {
@@ -67,7 +63,7 @@ router.get("/new-report", (req, res, next) => {
     })
     .then((userWithPets) => {
       console.log(userWithPets);
-      res.render("user/new-report", userWithPets);
+      res.render("user/new-report", { userWithPets, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
 })
@@ -138,12 +134,11 @@ router.get("/edit-report/:reportId", (req, res) => {
     console.log('Se encontro report', report)
     Report.findById(reportId)
       .then((report) => {
-        res.render('user/edit-report', report)
+        res.render('user/edit-report', { report, userInSession: req.session.user })
       })
   } else {
-    res.send('<h1>No puedes editar este report, no es tuyo</h1>')
+    res.send('<h1>Este no es tu reporte</h1>')
   }
-  // res.send('<h1>Este no es tu reporte</h1>')
 })
 
 /* POST Edit Report Status */
@@ -165,7 +160,7 @@ router.post("/edit-report/:reportId", (req, res) => {
 router.get("/edit-userProfile", async (req, res) => {
   const currentUser = await User.findById(req.session.user._id)
   console.log(currentUser)
-  res.render("user/edit-userProfile", {currentUser})
+  res.render("user/edit-userProfile", {currentUser, userInSession: req.session.user})
 }) 
 
 router.post("/edit-userProfile", (req, res) => {
