@@ -14,6 +14,9 @@
             <div class="d-flex justify-content-center mb-2">
               <a href="/pet/pet-profile/{{_id}}"><button type="button" class="btn btn-primary">View details</button></a>
             </div>
+            <form class="d-inline" action="/user/delete-pet/{{_id}}" method="post">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
           </div>
         </div>
       </div>

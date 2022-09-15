@@ -54,6 +54,18 @@ router.get("/my-pets", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+/* POST Delete My Pets */
+router.post("/delete-pet/:petId", (req, res) => {
+  const userId = req.session.user._id;
+  const { petId } = req.params;
+  Report.findByIdAndDelete(petId)
+    .then(() => User.findByIdAndUpdate(userId, {$pull: {pets: petId}}))
+    .then(() => {
+      res.redirect('/user/my-pets');
+    })
+    .catch((err) => console.log(err));
+});
+
 /* GET New Report */
 router.get("/new-report", (req, res, next) => {
   const userId = req.session.user._id;
@@ -140,7 +152,7 @@ router.get("/edit-report/:reportId", (req, res) => {
         res.render('user/edit-report', { report, userInSession: req.session.user })
       })
   } else {
-    res.send('<h1>Este no es tu reporte</h1>')
+    res.redirect('/pet/not-your-report');
   }
 })
 
@@ -153,10 +165,29 @@ router.post("/edit-report/:reportId", (req, res) => {
     foundStatus, situation 
   }, {new: true})
     .then((reportUpdated) => {
-      res.redirect(`/pet/pet-reports`);
+      res.redirect('/pet/pet-reports');
     }).
     catch((err) => console.log(err))
-}) 
+})
+
+/* POST Delete Report Status */
+router.post("/delete-report/:reportId", (req, res) => {
+  const reportsMade = req.session.user.reports;
+  const userId = req.session.user._id;
+  const { reportId } = req.params;
+
+  const report = reportsMade.find((id) => (id == reportId))
+  if (report) {
+    Report.findByIdAndDelete(reportId)
+    .then(() => User.findByIdAndUpdate(userId, {$pull: {reports: reportId}}))
+    .then(() => {
+      res.redirect('/pet/pet-reports');
+    })
+    .catch((err) => console.log(err));
+  } else {
+    res.redirect('/pet/not-your-report');
+  }
+});
 
 /* GET Edit User Profile */
 router.get("/edit-userProfile", async (req, res) => {

@@ -135,5 +135,9 @@ router.get("/pet-profile/:petId", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+/* GET Not your report */
+router.get("/not-your-report", (req, res, next) => {
+  res.render("pet/not-your-report", { userInSession: req.session.user });
+});
 
 module.exports = router;

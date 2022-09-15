@@ -32,9 +32,9 @@
         <p>Date of Report: {{date}}</p>
         {{#if ../../userInSession}}
         <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
-        {{#if ../../privilegesStatus}}
-          <a href="/user/delete-report/{{_id}}" class="btn btn-primary">Delete</a>
-        {{/if}}
+        <form class="d-inline" action="/user/delete-report/{{_id}}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
         {{/if}}
       </div>
     </div>
