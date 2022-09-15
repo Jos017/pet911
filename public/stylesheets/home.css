@@ -1,7 +1,21 @@
 #carousel-section {
-  max-height: 100vh;
+  max-height: 90vh;
   background-color: #263238;
 }
+#carousel-section .hero-text {
+  top: 10vh;
+  height: 90%;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+#carousel-section .hero-text h2 {
+  font-size: 4rem;
+}
+
+#carousel-section .hero-text p {
+  font-size: 1.6rem;
+}
+
 #pets-carousel {
   height: 100%;
   max-height: 100vh;
