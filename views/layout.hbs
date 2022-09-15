@@ -40,9 +40,11 @@
       <a href="/auth/signup" class="btn btn-outline-dark">signup</a>
       </form>
       {{/unless}}
+      {{#if userInSession}}
       <form class="d-flex" role="search" style="margin: 0px 20px 0px 0px;">
       <a href="/auth/logout" class="btn btn-outline-dark">Logout</a>
       </form>
+      {{/if}}
     </div>
   </div>
 </nav>
