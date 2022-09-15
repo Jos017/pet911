@@ -20,7 +20,7 @@ router.get("/user-profile", (req, res, next) => {
     Admin.findById(userId)
     .then(userInfo =>{
       console.log("Informacion de usuario", userInfo)
-      res.render("user/user-profile", { userInfo, userInSession: req.session.user, layout: false});
+      res.render("user/user-profile", { userInfo, userInSession: req.session.user});
     })
     .catch(error=>{
       console.log()
@@ -32,7 +32,7 @@ router.get("/user-profile", (req, res, next) => {
     return info.populate("pets")
   })
     .then((userInfo) =>{
-      res.render("user/user-profile", { userInfo, userInSession: req.session.user, layout: false })
+      res.render("user/user-profile", { userInfo, userInSession: req.session.user})
     })
     .catch(error=>{
       console.log(error)

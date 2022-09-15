@@ -130,14 +130,14 @@ router.get("/pet-profile/:petId", (req, res, next) => {
   Pet.findById(petId)
     .then((petInfo) => {
       console.log(petInfo);
-      res.render("pet/pet-profile", { petInfo, userInSession: req.session.user , layout: false});
+      res.render("pet/pet-profile", { petInfo, userInSession: req.session.user});
     })
     .catch((err) => console.log(err));
 });
 
 /* GET Not your report */
 router.get("/not-your-report", (req, res, next) => {
-  res.render("pet/not-your-report", { userInSession: req.session.user ,layout: false});
+  res.render("pet/not-your-report", { userInSession: req.session.user});
 });
 
 module.exports = router;
