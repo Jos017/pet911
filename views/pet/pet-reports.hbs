@@ -19,26 +19,28 @@
     </form>
   </div>
 
-  <div class="my-3 p-3 bg-body rounded shadow-sm">
+  <div class="my-3 p-3 rounded shadow-sm d-flex flex-column align-items-center" id="reports-container" >
     <h6 class="border-bottom pb-2 mb-0">Recent updates</h6>
-    {{#each reportsFiltered}}
-    <div class="d-flex text-muted pt-3">
-      <img width="32" height="32" src="{{petPicture}}"></img>
-      <div class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">{{userId.username}}</strong>
-        <p>Pet Name: {{petName}}</p>
-        <p>Pet Situation: {{situation}}</p>
-        <p>Status: {{foundStatus}}</p>
-        <p>Date of Report: {{date}}</p>
-        {{#if ../../userInSession}}
-        <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
-        <form class="d-inline" action="/user/delete-report/{{_id}}" method="post">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-        {{/if}}
+    <div class="d-flex flex-wrap justify-content-center">
+      {{#each reportsFiltered}}
+      <div class="d-flex pt-3">
+        <img width="32" height="32" src="{{petPicture}}"></img>
+        <div class="pb-3 mb-0 small lh-sm border-bottom">
+          <strong class="d-block text-gray-dark">{{userId.username}}</strong>
+          <p>Pet Name: {{petName}}</p>
+          <p>Pet Situation: {{situation}}</p>
+          <p>Status: {{foundStatus}}</p>
+          <p>Date of Report: {{date}}</p>
+          {{#if ../../userInSession}}
+          <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
+          <form class="d-inline" action="/user/delete-report/{{_id}}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          {{/if}}
+        </div>
       </div>
+      {{/each}}
     </div>
-    {{/each}}
   </div>
 </section>
 {{/with}}
