@@ -1,0 +1,27 @@
+#carousel-section {
+  max-height: 100vh;
+  background-color: #263238;
+}
+#pets-carousel {
+  height: 100%;
+  max-height: 100vh;
+}
+#fine-section {
+  min-height: 90vh;
+  background-color: #FBF4DF;
+}
+
+#fine-section .card{
+  background-color: #263238;
+  color: #FFFFFF;
+  border-radius: 16px;
+}
+#fine-section .card-body p {
+  font-size: 1.1rem;
+}
+
+#difference-section {
+  min-height: 90vh;
+  background-color: #263238;
+  color: #FFFFFF;
+}
