@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 
 const saltRounds = 10
 // Models Required
-const Report = require("../models/Report.model");
+const Report = require("../models/report.model");
 const User = require("../models/User.model");
 const Admin = require("../models/Admin.model");
-const Pet = require("../models/Pet.model");
+const Pet = require("../models/pet.model");
 
 
 /* GET User Profile */
@@ -82,7 +82,8 @@ router.get("/new-report", (req, res, next) => {
 
 /* POST New Report */
 router.post("/new-report", (req, res) => {
-  const {petName, situation, foundStatus, date, petPicture} = req.body;
+  const {petName, situation, foundStatus, date, petPicture,lat,lng} = req.body;
+  
   const userId = req.session.user._id;
   User.findById(userId)
     .then((userFound) => {
@@ -120,7 +121,9 @@ router.post("/new-report", (req, res) => {
         date,
         foundStatus,
         petPicture,
-        userId: userId
+        userId: userId,
+        lat,
+        lng
       })
         .then((newReport) => {
           // const newReportId = newReport._id;
@@ -157,7 +160,14 @@ router.get("/edit-report/:reportId", (req, res) => {
 router.post("/edit-report/:reportId", (req, res) => {
   const { foundStatus, situation } = req.body;
   const { reportId } = req.params
-  console.log(req.body);
+  
+  // if(!foundStatus){
+  //   return res.status(400).render(`user/edit-report/${reportId}`, {
+  //     errorMessage: "Select your pet status",
+  //     userInSession: req.session.user
+  //   });
+  // } 
+  
   Report.findByIdAndUpdate(reportId, {
     foundStatus, situation 
   }, {new: true})
@@ -187,12 +197,7 @@ router.post("/delete-report/:reportId", (req, res) => {
 });
 
 /* GET Edit User Profile */
-router.get("/edit-userProfile", /*async*/ (req, res) => {
-  // const currentUser = await User.findById(req.session.user._id)
-  // console.log(currentUser)
-  // res.render("user/edit-userProfile", {currentUser, userInSession: req.session.user})
-
-  
+router.get("/edit-userProfile", (req, res) => {
   const userId = req.session.user._id
   User.findById(userId)
     .then(info =>{
@@ -256,13 +261,16 @@ router.post("/edit-userProfile", (req, res) => {
   
   User.findOne({username}).then((founded)=>{
     if (founded) {
-      return res
-        .status(400)
-        .render("user/edit-userProfile", {
-          errorMessage: "Usernae is already registered.",
-          currentUser,
-          userInSession: req.session.user
-        });
+      const foundedId = founded._id.toString();
+      if(foundedId !== userId) {
+        return res
+          .status(400)
+          .render("user/edit-userProfile", {
+            errorMessage: "Username is already registered.",
+            currentUser,
+            userInSession: req.session.user
+          });
+      }
     }
     // if user is not found, create a new user - start with hashing the password
     console.log("Hola")
