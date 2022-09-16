@@ -283,16 +283,6 @@ router.post("/login", isLoggedOut, (req, res, next) => {
       });
   }
 
-  // Here we use the same logic as above
-  // - either length based parameters or we check the strength of a password
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-
-  if (!regex.test(password)) {
-    return res.status(400).render("auth/login", {
-      errorMessage: "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
-      userInSession: req.session.user
-    });
-  }
   // Search the database for a user with the username submitted in the form
   User.findOne({ username })
     .then((user) => {
@@ -301,7 +291,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         return res
           .status(400)
           .render("auth/login", {
-            errorMessage: "Wrong credentials.",
+            errorMessage: "Username not found",
             userInSession: req.session.user
           });
       }
@@ -312,7 +302,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           return res
             .status(400)
             .render("auth/login", {
-              errorMessage: "Wrong credentials.",
+              errorMessage: "Wrong password",
               userInSession: req.session.user
             });
         }
