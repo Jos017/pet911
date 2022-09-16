@@ -160,13 +160,21 @@ router.get("/edit-report/:reportId", (req, res) => {
 router.post("/edit-report/:reportId", (req, res) => {
   const { foundStatus, situation } = req.body;
   const { reportId } = req.params
+  const reportsMade = req.session.user.reports;
+  // const report = reportsMade.find((id) => (id == reportId))
   
-  // if(!foundStatus){
-  //   return res.status(400).render(`user/edit-report/${reportId}`, {
-  //     errorMessage: "Select your pet status",
-  //     userInSession: req.session.user
-  //   });
-  // } 
+  console.log('FoundStatus', foundStatus)
+  if(foundStatus == 0){
+    return Report.findById(reportId)
+      .then((report) => {
+        console.log('Reporte',report)
+        res.status(400).render(`user/edit-report`, {
+          report,
+          errorMessage: "Select your pet status",
+          userInSession: req.session.user
+        });
+      })
+  } 
   
   Report.findByIdAndUpdate(reportId, {
     foundStatus, situation 

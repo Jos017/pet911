@@ -55,7 +55,7 @@
                       <div class="form-group">
                         <label>Pet Status</label>
                         <select class="form-select" aria-label="Status form" name="foundStatus">
-                          <option selected>Select your pet Status</option>
+                          <option value="0" selected>Select your pet Status</option>
                           <option value="1">Lost</option>
                           <option value="2">Found but no with its owner</option>
                           <option value="3">With its owner</option>
@@ -66,8 +66,8 @@
                         <label for="floatingTextArea">Describe your pet situation</label>
                       </div>
                       <button type="submit" class="btn btn-primary">Edit Report Status</button>
-                      {{#if errorMessage}}
-                        <p>{{errorMessage}}</p>
+                      {{#if ../errorMessage}}
+                        <p>{{../errorMessage}}</p>
                       {{/if}}
                     </form>
                   </div>
