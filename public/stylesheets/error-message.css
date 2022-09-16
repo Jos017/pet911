@@ -1,7 +1,8 @@
 .error-message {
     position: absolute;
     z-index: 5;
-    background-color: red;
-    top: 50vh;
-    right: 46px;
+    background-color: #E2462B;
+    color: #FBF4DF;
+    top: 50px;
+    right: 240px;
 }
