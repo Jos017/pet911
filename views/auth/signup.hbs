@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="/stylesheets/home.css" />
     <link rel="stylesheet" href="/stylesheets/imageDropdown.css">
     <link rel="stylesheet" href="/stylesheets/new-reports-style.css">
+
     <link rel="stylesheet" href="/stylesheets/singup-style.css">
     <link rel="stylesheet" href="/stylesheets/error-message.css">
+
 
     <link rel="icon" type="image/png" href="/images/logo.png"/>
 </head>
@@ -65,8 +67,8 @@
 </header>
 <section class="height: 90vh">
    <div class="row g-0">
-      <div class="col-lg-7">
-         <img src="/images/pet2.jpg" class="d-block w-100" alt="...">
+      <div class="col-lg-8">
+         <img src="/images/pet2.jpg" class="d-block w-100 h-100" alt="...">
       </div>
       <div class="col-lg-3 d-flex flex-column">
          <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4">
@@ -121,7 +123,7 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
 
-             <button type="submit" class="btn btn-primary w-100">Create account</button>
+            
             {{#if errorMessage}}
             <p class="error-message">{{errorMessage}}</p> 
             {{/if}} 
@@ -130,7 +132,7 @@
    
            
             </form>
-
+             <button type="submit" class="btn btn-primary">Create account</button>
          </div>
       </div>
    </div>
