@@ -8,11 +8,16 @@ require("./db");
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
 const express = require("express");
+const moment = require("moment");
 
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
+hbs.registerHelper('Date',  ( fecha ) =>{
+return moment(fecha).format("DD/MM/YYYY")
 
+})
+console.log(hbs)
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
@@ -34,6 +39,7 @@ const userRoutes = require("./routes/user.routes");
 app.use("/user", userRoutes);
 
 const petRoutes = require("./routes/pet.routes");
+const { parseZone } = require("moment/moment");
 app.use("/pet", petRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

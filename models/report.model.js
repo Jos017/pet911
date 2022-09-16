@@ -32,7 +32,9 @@ const reportSchema = new Schema(
     userId: { 
       type: Schema.Types.ObjectId,
       ref: 'User'
-    }
+    },
+    lat:String,
+    lng:String
 },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
