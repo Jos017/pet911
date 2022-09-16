@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 
 const saltRounds = 10
 // Models Required
-const Report = require("../models/Report.model");
+const Report = require("../models/report.model");
 const User = require("../models/User.model");
 const Admin = require("../models/Admin.model");
-const Pet = require("../models/Pet.model");
+const Pet = require("../models/pet.model");
 
 
 /* GET User Profile */
