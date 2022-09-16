@@ -1,4 +1,4 @@
-{{#with report}}
+<!--{{#with report}}
 <section class="vh-100" style="background-color: #F8D046;">
   <h1>Edit your report</h1>
   <form class="m-5 d-flex flex-column align-items-center" action="/user/edit-report/{{_id}}" method="post">
@@ -28,4 +28,57 @@
     {{/if}}
   </form>
 </section>
+{{/with}} -->
+
+{{#with report}}
+<section style="background-color: #F8D046;">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card border-0" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="/images/edit-report.jpg"
+                alt="login form" class="img-fluid" style= "border-radius: 1rem 0 0 1rem;max-width: 100%;height: 100%;" />
+            </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div class="card-body p-4 p-lg-5 text-black">
+                    <h1 class="text-centermy-5">Edit your report status 🐶✨</h1>
+                    <form class="m-5 d-flex flex-column align-items-center" action="/user/edit-report/{{_id}}" method="post">
+                      <div class="form-group">
+                        <label for="petName">Pet name</label>
+                        <input type="text" class="form-control" id="petName" name="petName" placeholder="Pet Name" value="{{petName}}" disabled="disabled"/>
+                      </div>
+                      <div class="form-group d-flex justify-content-center">
+                        <img src="{{petPicture}}" alt="{{petName}} picture" class="w-50 my-3">
+                      </div>
+                      <div class="form-group">
+                        <label>Pet Status</label>
+                        <select class="form-select" aria-label="Status form" name="foundStatus">
+                          <option selected>Select your pet Status</option>
+                          <option value="1">Lost</option>
+                          <option value="2">Found but no with its owner</option>
+                          <option value="3">With its owner</option>
+                        </select>
+                      </div>
+                      <div class="form-floating my-3">
+                        <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
+                        <label for="floatingTextArea">Describe your pet situation</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Edit Report Status</button>
+                      {{#if errorMessage}}
+                        <p>{{errorMessage}}</p>
+                      {{/if}}
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
 {{/with}}
+
+
+<script src="/js/location.js"></script>

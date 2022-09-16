@@ -160,7 +160,14 @@ router.get("/edit-report/:reportId", (req, res) => {
 router.post("/edit-report/:reportId", (req, res) => {
   const { foundStatus, situation } = req.body;
   const { reportId } = req.params
-  console.log(req.body);
+  
+  // if(!foundStatus){
+  //   return res.status(400).render(`user/edit-report/${reportId}`, {
+  //     errorMessage: "Select your pet status",
+  //     userInSession: req.session.user
+  //   });
+  // } 
+  
   Report.findByIdAndUpdate(reportId, {
     foundStatus, situation 
   }, {new: true})
