@@ -190,12 +190,7 @@ router.post("/delete-report/:reportId", (req, res) => {
 });
 
 /* GET Edit User Profile */
-router.get("/edit-userProfile", /*async*/ (req, res) => {
-  // const currentUser = await User.findById(req.session.user._id)
-  // console.log(currentUser)
-  // res.render("user/edit-userProfile", {currentUser, userInSession: req.session.user})
-
-  
+router.get("/edit-userProfile", (req, res) => {
   const userId = req.session.user._id
   User.findById(userId)
     .then(info =>{
@@ -259,13 +254,16 @@ router.post("/edit-userProfile", (req, res) => {
   
   User.findOne({username}).then((founded)=>{
     if (founded) {
-      return res
-        .status(400)
-        .render("user/edit-userProfile", {
-          errorMessage: "Usernae is already registered.",
-          currentUser,
-          userInSession: req.session.user
-        });
+      const foundedId = founded._id.toString();
+      if(foundedId !== userId) {
+        return res
+          .status(400)
+          .render("user/edit-userProfile", {
+            errorMessage: "Username is already registered.",
+            currentUser,
+            userInSession: req.session.user
+          });
+      }
     }
     // if user is not found, create a new user - start with hashing the password
     console.log("Hola")
