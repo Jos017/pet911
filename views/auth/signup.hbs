@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/stylesheets/home.css" />
     <link rel="stylesheet" href="/stylesheets/imageDropdown.css">
     <link rel="stylesheet" href="/stylesheets/new-reports-style.css">
+
+    <link rel="stylesheet" href="/stylesheets/singup-style.css">
+    <link rel="stylesheet" href="/stylesheets/error-message.css">
+
+
     <link rel="icon" type="image/png" href="/images/logo.png"/>
 </head>
 <body style="height: 100vh">
@@ -120,7 +125,7 @@
 
             
             {{#if errorMessage}}
-            <p>{{errorMessage}}</p> 
+            <p class="error-message">{{errorMessage}}</p> 
             {{/if}} 
 
             </div>
