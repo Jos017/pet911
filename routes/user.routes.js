@@ -82,7 +82,8 @@ router.get("/new-report", (req, res, next) => {
 
 /* POST New Report */
 router.post("/new-report", (req, res) => {
-  const {petName, situation, foundStatus, date, petPicture} = req.body;
+  const {petName, situation, foundStatus, date, petPicture,lat,lng} = req.body;
+  
   const userId = req.session.user._id;
   User.findById(userId)
     .then((userFound) => {
@@ -120,7 +121,9 @@ router.post("/new-report", (req, res) => {
         date,
         foundStatus,
         petPicture,
-        userId: userId
+        userId: userId,
+        lat,
+        lng
       })
         .then((newReport) => {
           // const newReportId = newReport._id;

@@ -19,23 +19,41 @@
     </form>
   </div>
 
+  <script>
+    let map
+    let marker
+  </script>
+
   <div class="my-3 p-3 rounded shadow-sm d-flex flex-column align-items-center" id="reports-container" >
     <h6 class="border-bottom pb-2 mb-0">Recent updates</h6>
     <div class="d-flex flex-wrap justify-content-center">
       {{#each reportsFiltered}}
       <div class="d-flex pt-3">
         <img width="32" height="32" src="{{petPicture}}"></img>
+        <div id="map{{lat}}{{lng}}" class="map"></div>
         <div class="pb-3 mb-0 small lh-sm border-bottom">
           <strong class="d-block text-gray-dark">{{userId.username}}</strong>
           <p>Pet Name: {{petName}}</p>
           <p>Pet Situation: {{situation}}</p>
           <p>Status: {{foundStatus}}</p>
-          <p>Date of Report: {{date}}</p>
+          <p>Date of Report: {{Date date}}</p>
           {{#if ../../userInSession}}
           <a href="/user/edit-report/{{_id}}" class="btn btn-primary">Edit</a>
           <form class="d-inline" action="/user/delete-report/{{_id}}" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
+
+          <script>
+          
+          map = L.map('map' + {{lat}}+''+{{lng}}).setView([{{lat}},{{lng}}], 13);
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 19,
+              attribution: '© OpenStreetMap'
+          }).addTo(map);
+          marker = L.marker([{{lat}},{{lng}}]).addTo(map);
+          </script>
+
+          
           {{/if}}
         </div>
       </div>
@@ -44,3 +62,6 @@
   </div>
 </section>
 {{/with}}
+
+
+
