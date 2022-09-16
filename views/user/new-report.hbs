@@ -10,81 +10,62 @@
               <img src="/images/rep.jpg"
                 alt="login form" class="img-fluid" style= "border-radius: 1rem 0 0 1rem;max-width: 100%;height: 100%;" />
             </div>
-              <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                  <div class="card-body p-4 p-lg-5 text-black">
-                    <h1 class="text-centermy-5">Create a new report 🐶✨</h1>
-                    <form class="m-5 d-flex flex-column " action="/user/new-report" method="post">
-
-              <div class="form-group">
-                <label for="petName">Pet name </label>
-                  {{!-- <input type="text" class="form-control" id="petName" name="petName" placeholder="Pet Name" /> --}}
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <h1 class="text-centermy-5">Create a new report 🐶✨</h1>
+                <form class="m-5 d-flex flex-column " action="/user/new-report" method="post">
+                  <div class="form-group">
+                    <label for="petName">Pet name </label>
                     <select class="form-select" aria-label="Your pets select" name="petName">
                       <option selected>Select the pet you need to report</option>
                       {{#each pets}}
                         <option value="{{petName}}">{{petName}}</option>
                       {{/each}}
                     </select>
-               </div>
-               <div class="form-group">
-                        <label for="date">Date of Loss</label>
-                          <input type="date" class="form-control" id="date" name="date"/>
-                </div>
-                      <div class="form-group">
-                              <label>Pet Status</label>
-                              <select class="form-select" aria-label="Status form" name="foundStatus">
-                              <option selected>Select your pet Status</option>
-                              <option value="1">Lost</option>
-                              <option value="2">Found but no with its owner</option>
-                              <option value="3">With its owner</option>
-                              </select>
-                </div>
-                <div class="form-group">
-                            <label for="petPicture">Pet name </label>
-                            <select class="form-select" aria-label="Picture select" name="petPicture">
-                              <option selected>Select the picture of the pet to report</option>
-                              {{#each pets}}
-                                  <option style="background-image:url({{petPic}});" value="{{petPic}}">{{petPic}}</option>  
-                              {{/each}}
-                            </select>
-                </div>
-
-               
-                
-                      <div class="form-floating my-3">
-                      <input type="text" name="lat"  id="lat">
-                      <input type="text" name="lng"  id="lng">
-                        <label for="floatingTextArea"></label>
-                      </div>
-
-                     
-
-
-                      <div class="form-floating my-3">
-                        <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px;"></textarea>
-                        <label for="floatingTextArea">Describe your pet situation</label>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Create Report</button>
-
-                      
-                      {{#if ../errorMessage}}
-                        <p>{{../errorMessage}}</p>
-                      {{/if}}
-                    </form>
                   </div>
+                  <div class="form-group">
+                    <label for="date">Date of Loss</label>
+                    <input type="date" class="form-control" id="date" name="date"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Pet Status</label>
+                    <select class="form-select" aria-label="Status form" name="foundStatus">
+                      <option selected>Select your pet Status</option>
+                      <option value="1">Lost</option>
+                      <option value="2">Found but no with its owner</option>
+                      <option value="3">With its owner</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="petPicture">Pet name </label>
+                    <select class="form-select" aria-label="Picture select" name="petPicture">
+                      <option selected>Select the picture of the pet to report</option>
+                      {{#each pets}}
+                      <option style="background-image:url({{petPic}});" value="{{petPic}}">{{petPic}}</option>  
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="form-floating my-3">
+                    <input type="text" name="lat"  id="lat">
+                    <input type="text" name="lng"  id="lng">
+                    <label for="floatingTextArea"></label>
+                  </div>
+                  <div class="form-floating my-3">
+                    <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px;"></textarea>
+                    <label for="floatingTextArea">Describe your pet situation</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Create Report</button>
+                  {{#if ../errorMessage}}
+                    <p class="error-message">{{../errorMessage}}</p>
+                  {{/if}}
+                </form>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
-<<<<<<< HEAD
-    <button type="submit" class="btn btn-primary">Create Report</button>
-    {{#if ../errorMessage}}
-      <p class="error-message">{{../errorMessage}}</p>
-    {{/if}}
-  </form>
-=======
   </div>
->>>>>>> 7e5c38bac256415cca83543e729c898fea56c38f
 </section>
 {{/with}}
 

@@ -8,7 +8,6 @@ const fileUploader = require("..//config/cloudinary")
 /* GET Pet Reports */
 router.get("/pet-reports" ,(req, res, next) => {
   const { filter } = req.query;
-  console.log(req.query)
   let userPrivileges;
   let privilegesStatus;
   if (!req.session.user) {
@@ -48,8 +47,6 @@ router.get("/pet-reports" ,(req, res, next) => {
         privilegesStatus,
         userLogged: true
       }
-      console.log('Primer IF', reportsInfo)
-      console.log(req.session.user)
       res.render('pet/pet-reports',{ 
         reportsInfo,
         userInSession: req.session.user
@@ -80,7 +77,6 @@ router.get("/pet-reports" ,(req, res, next) => {
         userPrivileges,
         privilegesStatus
       }
-      console.log('Segundo IF', reportsInfo)
       res.render('pet/pet-reports', { reportsInfo, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
@@ -96,7 +92,6 @@ router.get("/pet-signup",(req, res, next) => {
 router.post("/pet-signup", fileUploader.single("petPic") , (req, res) => {
   const {petName, specie, petPic, description} = req.body
   const userId = req.session.user._id
-  console.log(req.body)
   let newPetId;
   if (!petName) {
     return res
@@ -129,7 +124,6 @@ router.get("/pet-profile/:petId", (req, res, next) => {
   const {petId} =req.params
   Pet.findById(petId)
     .then((petInfo) => {
-      console.log(petInfo);
       res.render("pet/pet-profile", { petInfo, userInSession: req.session.user});
     })
     .catch((err) => console.log(err));

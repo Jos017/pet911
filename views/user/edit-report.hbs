@@ -1,35 +1,3 @@
-<!--{{#with report}}
-<section class="vh-100" style="background-color: #F8D046;">
-  <h1>Edit your report</h1>
-  <form class="m-5 d-flex flex-column align-items-center" action="/user/edit-report/{{_id}}" method="post">
-    <div class="form-group">
-      <label for="petName">Pet name</label>
-      <input type="text" class="form-control" id="petName" name="petName" placeholder="Pet Name" value="{{petName}}" disabled="disabled"/>
-    </div>
-    <div class="form-group d-flex justify-content-center">
-      <img src="{{petPicture}}" alt="{{petName}} picture" class="w-50 my-3">
-    </div>
-    <div class="form-group">
-      <label>Pet Status</label>
-      <select class="form-select" aria-label="Status form" name="foundStatus">
-        <option selected>Select your pet Status</option>
-        <option value="1">Lost</option>
-        <option value="2">Found but no with its owner</option>
-        <option value="3">With its owner</option>
-      </select>
-    </div>
-    <div class="form-floating my-3">
-      <textarea name="situation" id="floatingTextarea" class="form-control" style="height: 100px; width: 250px;"></textarea>
-      <label for="floatingTextArea">Describe your pet situation</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Edit Report Status</button>
-    {{#if errorMessage}}
-      <p class="error-message">{{errorMessage}}</p>
-    {{/if}}
-  </form>
-</section>
-{{/with}} -->
-
 {{#with report}}
 <section style="background-color: #F8D046;">
   <div class="container py-5">

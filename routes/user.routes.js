@@ -16,14 +16,12 @@ router.get("/user-profile", (req, res, next) => {
   const userId = req.session.user._id
   const userPrivileges = req.session.user.userPrivileges
   if (userPrivileges === 'admin') {
-    console.log("User privileges", userPrivileges)
     Admin.findById(userId)
     .then(userInfo =>{
-      console.log("Informacion de usuario", userInfo)
       res.render("user/user-profile", { userInfo, userInSession: req.session.user});
     })
     .catch(error=>{
-      console.log()
+      console.log(error)
     })
   }
   if (userPrivileges === 'user') {
@@ -48,7 +46,6 @@ router.get("/my-pets", (req, res, next) => {
       return userFound.populate('pets');
     })
     .then((userWithPets) => {
-      console.log(userWithPets);
       res.render("user/my-pets", { userWithPets, userInSession: req.session.user });
     })
     .catch((err) => console.log(err));
@@ -131,7 +128,6 @@ router.post("/new-report", (req, res) => {
         })
         .then((newUser) => {
           req.session.user = newUser;
-          console.log(newUser);
           res.redirect('/pet/pet-reports')
         })
         .catch((err) => console.log(err));
@@ -140,13 +136,10 @@ router.post("/new-report", (req, res) => {
 
 /* GET Edit Report */
 router.get("/edit-report/:reportId", (req, res) => {
-  // const {petName, situation, foundStatus, date } = req.body;
   const reportsMade = req.session.user.reports;
   const reportId = req.params.reportId;
-  // Report.findById(reportId)
   const report = reportsMade.find((id) => (id == reportId))
   if (report) {
-    console.log('Se encontro report', report)
     Report.findById(reportId)
       .then((report) => {
         res.render('user/edit-report', { report, userInSession: req.session.user })
@@ -161,13 +154,10 @@ router.post("/edit-report/:reportId", (req, res) => {
   const { foundStatus, situation } = req.body;
   const { reportId } = req.params
   const reportsMade = req.session.user.reports;
-  // const report = reportsMade.find((id) => (id == reportId))
   
-  console.log('FoundStatus', foundStatus)
   if(foundStatus == 0){
     return Report.findById(reportId)
       .then((report) => {
-        console.log('Reporte',report)
         res.status(400).render(`user/edit-report`, {
           report,
           errorMessage: "Select your pet status",
@@ -224,7 +214,6 @@ router.post("/edit-userProfile", (req, res) => {
   const userId = req.session.user._id
   const currentUser = req.session.user
   if (!username) {
-    console.log("1")
     return res.status(400).render("user/edit-userProfile", {
       errorMessage: "Please provide a username.",
       currentUser,
@@ -233,7 +222,6 @@ router.post("/edit-userProfile", (req, res) => {
   } 
 
   if(!email){
-    console.log("3")
     return res.status(400).render("user/edit-userProfile", {
       errorMessage: "Please provide a email.",
       currentUser,
@@ -281,12 +269,10 @@ router.post("/edit-userProfile", (req, res) => {
       }
     }
     // if user is not found, create a new user - start with hashing the password
-    console.log("Hola")
     return bcrypt
       .genSalt(saltRounds)
       .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
-        console.log(hashedPassword)
         // Create a user and save it in the database
         return User.findByIdAndUpdate(userId, {
           username, 
@@ -299,7 +285,6 @@ router.post("/edit-userProfile", (req, res) => {
         }, {new: true});
       })
       .then((userUpdate) => {
-        // console.log(userUpdate)
         // Bind the user to the session object
         req.session.user = userUpdate;
         

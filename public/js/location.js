@@ -9,7 +9,6 @@ if (navigator.geolocation) {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    console.log('center: ', center)
     // User granted permission
     // Center the map in the position we got
     document.getElementById("lat").value=center.lat

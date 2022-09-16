@@ -28,15 +28,12 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
   const { username, password } = req.body;
   
   if (!username) {
-    console.log("1")
     return res.status(400).render("auth/admin-signup", {
       errorMessage: "Please provide your username.",
       userInSession: req.session.user
     });
   }
-  console.log("ADMINADMINKEY", process.env.ADMIN_KEY)
   if (password !== process.env.ADMIN_KEY) {
-    console.log("2")
     return res.status(400).render("auth/admin-signup", {
       errorMessage: "Your password does not match credentials",
       userInSession: req.session.user
@@ -53,14 +50,12 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
           userInSession: req.session.user
         });
     }
-    console.log("EROROROROROROR",req.body)
 
     // if user is not found, create a new user - start with hashing the password
     return bcrypt
       .genSalt(saltRounds)
       .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
-        console.log(hashedPassword)
         // Create a user and save it in the database
         return Admin.create({
           username, 
@@ -70,7 +65,6 @@ router.post("/admin-signup",isLoggedOut,(req, res) => {
       })
       .then((user) => {
         // Bind the user to the session object
-        console.log("UserUser", user)
         req.session.user = user;
         res.redirect("/user/user-profile");
       })
@@ -109,11 +103,8 @@ router.get("/signup", isLoggedOut, (req, res) => {
 // User
 router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, res) => {
   const { username, firstName, lastName, email, password, phone, address, check } = req.body;
-  console.log(req.body)
-  // return
   
   if (!username) {
-    console.log("1")
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide a username.",
       userInSession: req.session.user,
@@ -122,7 +113,6 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
   } 
 
   if(!email){
-    console.log("3")
     return res.status(400).render,("auth/signup", {
       errorMessage: "Please provide a email.",
       userInSession: req.session.user,
@@ -185,7 +175,6 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
       .genSalt(saltRounds)
       .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
-        console.log(hashedPassword)
         // Create a user and save it in the database
         return User.create({
           username, 
@@ -201,7 +190,6 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
         });
       })
       .then((user) => {
-        console.log(user)
         // Bind the user to the session objecttemplate_tx9o6lw
         req.session.user = user;
         const data = {
@@ -224,7 +212,6 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
           data: JSON.stringify(data),
         })
           .then((result) => {
-            console.log(result);
             console.log("Correo enviado :)");
           })
           .catch((err) => {
@@ -236,7 +223,6 @@ router.post("/signup", isLoggedOut, fileUploader.single("profilePic") , (req, re
      
       })
       .catch((error) => {
-        console.log(error)
         if (error instanceof mongoose.Error.ValidationError) {
           return res
             .status(400)
@@ -306,20 +292,14 @@ router.post("/login", isLoggedOut, (req, res, next) => {
               userInSession: req.session.user
             });
         }
-        console.log(user)
         req.session.user = user;
-        console.log(user)
-        // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/user/user-profile");
         
       });
     })
 
     .catch((err) => {
-      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
-      // you can just as easily run the res.status that is commented out below
       next(err);
-      // return res.status(500).render("auth/login", { errorMessage: err.message });
     });
 });
 

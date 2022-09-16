@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="/stylesheets/home.css" />
     <link rel="stylesheet" href="/stylesheets/imageDropdown.css">
     <link rel="stylesheet" href="/stylesheets/new-reports-style.css">
-
-    <link rel="stylesheet" href="/stylesheets/singup-style.css">
     <link rel="stylesheet" href="/stylesheets/error-message.css">
-
-
     <link rel="icon" type="image/png" href="/images/logo.png"/>
 </head>
 <body style="height: 100vh">
@@ -72,70 +68,53 @@
       </div>
       <div class="col-lg-3 d-flex flex-column">
          <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4">
-           
          </div>
          <div class="px-lg-5 py-lg-4 p-4">
             <h1 class="font-weight-bold mb-4"> Welcome</h1>
             <form action="/auth/signup" method="post" enctype="multipart/form-data">
-         
-            <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">User name </label>
-            <input type="text" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="User name" name="username" >
-            </div>
-
-            <div class="mb-3">
-            <label for="exampleInputPassword1">First Name</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="First Name" name="firstName" >
-            </div>
-
-            <div class="mb-3">
-            <label for="exampleInputPassword1">Last Name</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Last Name" name="lastName" >
-            </div>
-
-            <div class="mb-3">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email" name="email" >
-            </div>
-
-            <div class="mb-3">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-            </div>
-   
-            <div class="mb-3">
-            <label for="exampleInputPassword1">Phone number</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone number" name="phone">
-            </div>
-            
-            <div class="mb-3">
-            <label for="exampleInputPassword1">Address</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address" name="address">
-            </div>
-   
-            <div class="mb-3">
-            <label for="exampleInputPassword1">Add your profile picture</label>
-            <input type="file" class="form-control" id="exampleInputPassword1"  name="profilePic">
-            </div>
-   
-            <div class="mb-3">
-
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-
-            
-            {{#if errorMessage}}
-            <p class="error-message">{{errorMessage}}</p> 
-            {{/if}} 
-
-            </div>
-   
-           
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">User name </label>
+                <input type="text" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="User name" name="username" >
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">First Name</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="First Name" name="firstName" >
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">Last Name</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Last Name" name="lastName" >
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email" name="email" >
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">Phone number</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Phone number" name="phone">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">Address</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address" name="address">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1">Add your profile picture</label>
+                <input type="file" class="form-control" id="exampleInputPassword1"  name="profilePic">
+              </div>
+              <div class="mb-3">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                {{#if errorMessage}}
+                <p class="error-message">{{errorMessage}}</p> 
+                {{/if}} 
+              </div>
+              <button type="submit" class="btn btn-primary">Create account</button>
             </form>
-             <button type="submit" class="btn btn-primary">Create account</button>
          </div>
       </div>
    </div>
 </section>
-
 </body>
